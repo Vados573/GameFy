@@ -46,29 +46,29 @@ if ($password != $confirm) {
     die(json_encode($json));
 }
 
-//if (isset($captchaResponse) && !empty($captchaResponse)) { // Check if Captcha is checked
-//    //Site secret key
-//    $secret = "6Lcb2w0gAAAAABsJbFlp9zO2wpCZeHAbm-tNlMzG";
-//    //Get verify response data
-//    $verifyResponse = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=" . $secret . "&response=" . $captchaResponse);
-//    $responseData = json_decode($verifyResponse);
-//    if (!$responseData->success) { // If response is not success
-//        $json['error'] = "Robot verification failed, please try again!";
-//        die(json_encode($json));
-//    }
-//} else {
-//    $json['error'] = "Please check the Captcha checkbox!";
-//    die(json_encode($json));
-//}
+if (isset($captchaResponse) && !empty($captchaResponse)) { // Check if Captcha is checked
+    //Site secret key
+    $secret = "6Lcb2w0gAAAAABsJbFlp9zO2wpCZeHAbm-tNlMzG";
+    //Get verify response data
+    $verifyResponse = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=" . $secret . "&response=" . $captchaResponse);
+    $responseData = json_decode($verifyResponse);
+    if (!$responseData->success) { // If response is not success
+        $json['error'] = "Robot verification failed, please try again!";
+        die(json_encode($json));
+    }
+} else {
+    $json['error'] = "Please check the Captcha checkbox!";
+    die(json_encode($json));
+}
 
 $salt = saltGenerator();
 $password = $password . $salt;
 $password = hash("sha512", $password);
 
 try {
-    $preparation = odbc_prepare($con, 'INSERT INTO user VALUES (null, ?, ?, ?, ?, ?, ?, ?, ?)');
+    $preparation = odbc_prepare($con, 'INSERT INTO user VALUES (null, ?, ?, ?, ?, ?, ?, ?)');
     $array_param = array();
-    array_push($array_param, $username, $password, $salt, $email, 0, 1, null, 0);
+    array_push($array_param, $username, $password, $salt, $email, 0, 1, 0);
     $success = odbc_execute($preparation, $array_param);
     if (!$success) {
         throw new Exception("Something went wrong! Account creation failed! Please Try again later!");

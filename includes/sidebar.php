@@ -73,83 +73,101 @@
                                 <a href="https://vm.beeteam368.net/series-category/tv-shows/">TV Shows</a></li>
                         </ul>
                         <?php
-                            if (isset($_SESSION['id'])){
-                        ?>
-                        <h5 class="h5 widget-title flex-row-control flex-vertical-middle layer-hidden" style="display: none; margin: 0 0 10px 0">
+                        if (isset($_SESSION['id'])) {
+                            ?>
+                            <h5 class="h5 widget-title flex-row-control flex-vertical-middle layer-hidden"
+                                style="display: none; margin: 0 0 10px 0">
                                 <span class="widget-title-wrap">Followed Channels:
                                     <span class="wg-line" style="height: 1px; width: 100%;">
 
                                     </span>
                                 </span>
-                        </h5>
-                        <article class="post-item site__col flex-row-control" style="width: var(--width__side-menu-hide);padding: 10px 0;">
-                            <div class="post-item-wrap" style="width: 100%;">
-                                <div class="author-wrapper flex-row-control flex-vertical-middle">
-                                    <a href="https://vm.beeteam368.net/channel/channel-id/1/" class="author-avatar-wrap"
-                                       title="Nicolas" style="margin: auto">
-                                        <img alt="Author Avatar"
-                                             src="https://secure.gravatar.com/avatar/119915a6b9fb9c5149b70ee96a7bc1a6?s=61&amp;d=mm&amp;r=g"
-                                             sizes="(max-width: 61px) 100vw, 61px"
-                                             srcset="https://secure.gravatar.com/avatar/119915a6b9fb9c5149b70ee96a7bc1a6?s=61&amp;d=mm&amp;r=g 61w, https://secure.gravatar.com/avatar/119915a6b9fb9c5149b70ee96a7bc1a6?s=122&amp;d=mm&amp;r=g 122w"
-                                             class="author-avatar" width="61" height="61"> </a>
-                                    <div class="author-avatar-name-wrap layer-hidden" style="display:none;">
-                                        <h4 class="h5 author-avatar-name max-1line">
-                                            <a href="https://vm.beeteam368.net/channel/channel-id/1/"
-                                               class="author-avatar-name-link" title="Nicolas">
-                                                <i class="fas fa-check-circle author-verified is-verified"></i><span>Nicolas</span>
-                                            </a>
-                                        </h4>
-                                        <span class="author-meta font-meta">
+                            </h5>
+                            <div id="follow-area">
+                                <?php
+                                $sql = "SELECT u.id_user, channel.id_user as user_channel , uc.username_user, 
+                                    channel.id_channel, channel.name_channel, channel.followers_channel, channel.is_live 
+                                    FROM follow 
+                                    JOIN user u ON u.id_user = follow.id_user 
+                                    JOIN channel ON channel.id_channel = follow.id_channel
+                                    JOIN user uc ON channel.id_user = uc.id_user
+                                    WHERE follow.id_user = " . $_SESSION['id'] . "
+                                    ORDER BY channel.followers_channel DESC LIMIT 10
+                                    ;";
+                                $result = odbc_exec($con, $sql);
+                                $counter = 0;
+                                while ($table = odbc_fetch_object($result)) {
+                                    $counter++;
+                                    $fileName = $_SERVER["DOCUMENT_ROOT"] . "/GameFy/" . PATH_IMG_USER . $table->user_channel . ".jpeg";
+                                    if (file_exists($fileName)) {
+                                        $path = PATH_IMG_USER . $table->user_channel . ".jpeg";
+                                    } else {
+                                        $path = "https://secure.gravatar.com/avatar/83232f25bace98c04afdba2ef9eedd8d?s=61&d=mm&r=g";
+                                    }
+                                    $followers = getMinNumber(intval($table->followers_channel));
+                                    ?>
+                                    <article class="post-item site__col flex-row-control"
+                                             style="width: var(--width__side-menu-hide);padding: 10px 0;">
+                                        <div class="post-item-wrap" style="width: 100%;">
+                                            <div class="author-wrapper flex-row-control flex-vertical-middle">
+                                                <a href="#"
+                                                   class="author-avatar-wrap"
+                                                   title="<?php echo $table->name_channel ?>" style="margin: auto">
+                                                    <img alt="Author Avatar"
+                                                         src="<?php echo $path ?>"
+                                                         sizes="(max-width: 61px) 100vw, 61px"
+                                                         srcset="<?php echo $path ?>"
+                                                         class="author-avatar" width="61" height="61"> </a>
+                                                <div class="author-avatar-name-wrap layer-hidden" style="display:none;">
+                                                    <h4 class="h5 author-avatar-name max-1line">
+                                                        <a href="#"
+                                                           class="author-avatar-name-link"
+                                                           title="<?php echo $table->name_channel ?>">
+                                                            <?php
+                                                            if ($table->is_live == "1") { // Checks if user is live
+
+                                                                ?>
+                                                                <i class="fas fa-check-circle author-verified is-verified"></i>
+                                                                <?php
+                                                            }
+                                                            ?>
+                                                            <span><?php echo $table->name_channel ?></span>
+                                                        </a>
+                                                    </h4>
+                                                    <span class="author-meta font-meta">
 <i class="icon far fa-heart"></i><span class="subscribers-count subscribers-count-control"
-                                       data-author-id="1"><span>44</span><span class="info-text">Followers</span></span>
+                                       data-author-id="1"><span><?php echo $followers; ?></span><span
+                                                                    class="info-text">Followers</span></span>
 </span>
-                                    </div>
-                                </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </article>
+                                <?php } ?>
                             </div>
-                        </article>
-                        <article class="post-item site__col flex-row-control" style="width: var(--width__side-menu-hide);padding: 10px 0;">
-                            <div class="post-item-wrap" style="width: 100%;">
-                                <div class="author-wrapper flex-row-control flex-vertical-middle">
-                                    <a href="https://vm.beeteam368.net/channel/channel-id/1/" class="author-avatar-wrap"
-                                       title="Nicolas" style="margin: auto">
-                                        <img alt="Author Avatar"
-                                             src="https://secure.gravatar.com/avatar/119915a6b9fb9c5149b70ee96a7bc1a6?s=61&amp;d=mm&amp;r=g"
-                                             sizes="(max-width: 61px) 100vw, 61px"
-                                             srcset="https://secure.gravatar.com/avatar/119915a6b9fb9c5149b70ee96a7bc1a6?s=61&amp;d=mm&amp;r=g 61w, https://secure.gravatar.com/avatar/119915a6b9fb9c5149b70ee96a7bc1a6?s=122&amp;d=mm&amp;r=g 122w"
-                                             class="author-avatar" width="61" height="61"> </a>
-                                    <div class="author-avatar-name-wrap layer-hidden" style="display:none;">
-                                        <h4 class="h5 author-avatar-name max-1line">
-                                            <a href="https://vm.beeteam368.net/channel/channel-id/1/"
-                                               class="author-avatar-name-link" title="Nicolas">
-                                                <i class="fas fa-check-circle author-verified is-verified"></i><span>Nicolas</span>
-                                            </a>
-                                        </h4>
-                                        <span class="author-meta font-meta">
-<i class="icon far fa-heart"></i><span class="subscribers-count subscribers-count-control"
-                                       data-author-id="1"><span>44</span><span class="info-text">Followers</span></span>
-</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </article>
-                        <nav class="beeteam368-pagination pagination-loadmore beeteam368-pagination flex-row-control flex-row-center flex-vertical-middle layer-hidden"
-                             style="display: none; margin-left: 0"
-                             data-paged="1" data-template="template-parts/archive/item"
-                             data-style="marguerite-author-widget"
-                             data-append-id="#blog_wrapper_1715015991654711050"
-                             data-query-id="blog_wrapper_1715015991654711050" data-total-pages="2">
-                            <button class="loadmore-btn loadmore-btn-control ">
-                                <span class="loadmore-text loadmore-text-control">Load More</span>
-                                <span class="loadmore-loading">
+                            <?php
+                            if ($counter >= 10) {
+                                ?>
+                                <nav class="beeteam368-pagination pagination-loadmore beeteam368-pagination flex-row-control flex-row-center flex-vertical-middle layer-hidden"
+                                     style="display: none; margin-left: 0"
+                                     data-paged="1" data-template="template-parts/archive/item"
+                                     data-style="marguerite-author-widget"
+                                     data-append-id="#blog_wrapper_1715015991654711050"
+                                     data-query-id="blog_wrapper_1715015991654711050" data-total-pages="2">
+                                    <button class="loadmore-btn loadmore-btn-control load-more following"
+                                            data-count="0">
+                                        <span class="loadmore-text loadmore-text-control">Load More</span>
+                                        <span class="loadmore-loading">
 <span class="loadmore-indicator">
 <svg><polyline class="lm-back" points="1 6 4 6 6 11 10 1 12 6 15 6"></polyline> <polyline class="lm-front"
                                                                                           points="1 6 4 6 6 11 10 1 12 6 15 6"></polyline></svg>
 </span>
 </span>
-                            </button>
-                        </nav>
-                        <?php
+                                    </button>
+                                </nav>
+                                <?php
                             }
+                        }
                         ?>
                     </div>
                     <div class="sidemenu-sidebar side-row" style="display:none;">
@@ -162,33 +180,131 @@
                                     </span>
                                 </span>
                             </h5>
-                            <div id="blog_wrapper_1715015991654711050"
-                                 class="blog-wrapper global-blog-wrapper blog-wrapper-control flex-row-control site__row">
-                                <article class="post-item site__col flex-row-control">
-                                    <div class="post-item-wrap">
-                                        <div class="author-wrapper flex-row-control flex-vertical-middle">
-                                            <a href="https://vm.beeteam368.net/channel/channel-id/1/"
-                                               class="author-avatar-wrap" title="Nicolas">
-                                                <img alt="Author Avatar"
-                                                     src="https://secure.gravatar.com/avatar/119915a6b9fb9c5149b70ee96a7bc1a6?s=61&amp;d=mm&amp;r=g"
-                                                     sizes="(max-width: 61px) 100vw, 61px"
-                                                     srcset="https://secure.gravatar.com/avatar/119915a6b9fb9c5149b70ee96a7bc1a6?s=61&amp;d=mm&amp;r=g 61w, https://secure.gravatar.com/avatar/119915a6b9fb9c5149b70ee96a7bc1a6?s=122&amp;d=mm&amp;r=g 122w"
-                                                     class="author-avatar" width="61" height="61"> </a>
-                                            <div class="author-avatar-name-wrap">
-                                                <h4 class="h5 author-avatar-name max-1line">
-                                                    <a href="https://vm.beeteam368.net/channel/channel-id/1/"
-                                                       class="author-avatar-name-link" title="Nicolas">
-                                                        <i class="fas fa-check-circle author-verified is-verified"></i><span>Nicolas</span>
-                                                    </a>
-                                                </h4>
-                                                <span class="author-meta font-meta">
+                            <div id="recommend-area">
+                                <?php
+                                if (isset($_SESSION['id'])) {
+                                    $sql = "SELECT u.id_user, channel.id_user as user_channel , u.username_user,
+                                    channel.id_channel, channel.name_channel, channel.followers_channel, channel.is_live 
+                                    FROM channel
+                                    JOIN user u ON u.id_user = channel.id_user 
+                                    WHERE u.id_user <> " . $_SESSION['id'] . " AND " . $_SESSION['id'] . " NOT IN (SELECT id_user FROM follow WHERE id_channel = channel.id_channel)
+                                    ORDER BY followers_channel DESC LIMIT 10;";
+                                    $result = odbc_exec($con, $sql);
+                                    while ($table = odbc_fetch_object($result)) {
+                                        $fileName = $_SERVER["DOCUMENT_ROOT"] . "/GameFy/" . PATH_IMG_USER . $table->user_channel . ".jpeg";
+                                        if (file_exists($fileName)) {
+                                            $path = PATH_IMG_USER . $table->user_channel . ".jpeg";
+                                        } else {
+                                            $path = "https://secure.gravatar.com/avatar/83232f25bace98c04afdba2ef9eedd8d?s=61&d=mm&r=g";
+                                        }
+                                        $followers = getMinNumber(intval($table->followers_channel));
+                                        ?>
+                                        <div id="blog_wrapper_1715015991654711050"
+                                             class="blog-wrapper global-blog-wrapper blog-wrapper-control flex-row-control site__row"
+                                             style="margin-bottom: 20px;">
+                                            <article class="post-item site__col flex-row-control">
+                                                <div class="post-item-wrap">
+                                                    <div class="author-wrapper flex-row-control flex-vertical-middle">
+                                                        <a href="#"
+                                                           class="author-avatar-wrap"
+                                                           title="<?php echo $table->name_channel ?>">
+                                                            <img alt="Author Avatar"
+                                                                 src="<?php echo $path ?>"
+                                                                 sizes="(max-width: 61px) 100vw, 61px"
+                                                                 srcset="<?php echo $path ?>"
+                                                                 class="author-avatar" width="61" height="61"> </a>
+                                                        <div class="author-avatar-name-wrap">
+                                                            <h4 class="h5 author-avatar-name max-1line">
+                                                                <a href="#"
+                                                                   class="author-avatar-name-link"
+                                                                   title="<?php echo $table->name_channel ?>">
+                                                                    <?php
+                                                                    if ($table->is_live == "1") { // Checks if user is live
+                                                                        ?>
+                                                                        <i class="fas fa-check-circle author-verified is-verified"></i>
+                                                                        <?php
+                                                                    }
+                                                                    ?>
+                                                                    <span><?php echo $table->name_channel ?></span>
+                                                                </a>
+                                                            </h4>
+                                                            <span class="author-meta font-meta">
 <i class="icon far fa-heart"></i><span class="subscribers-count subscribers-count-control"
-                                       data-author-id="1"><span>44</span><span class="info-text">Followers</span></span>
+                                       data-author-id="1"><span><?php echo $followers; ?></span><span
+                                                                            class="info-text">Followers</span></span>
 </span>
-                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </article>
                                         </div>
-                                    </div>
-                                </article>
+                                        <?php
+                                    }
+                                } else {
+                                    $sql = "SELECT u.id_user, channel.id_user as user_channel , u.username_user,
+                                    channel.id_channel, channel.name_channel, channel.followers_channel, channel.is_live 
+                                    FROM channel
+                                    JOIN user u ON u.id_user = channel.id_user 
+                                    WHERE channel.is_live = 1
+                                    ORDER BY followers_channel DESC
+                                    LIMIT 10
+                                    ";
+                                    $result = odbc_exec($con, $sql);
+                                    $result_number = odbc_num_rows($result);
+                                    $counter = 0;
+                                    while ($table = odbc_fetch_object($result)) {
+                                        $counter++;
+                                        $fileName = $_SERVER["DOCUMENT_ROOT"] . "/GameFy/" . PATH_IMG_USER . $table->user_channel . ".jpeg";
+                                        if (file_exists($fileName)) {
+                                            $path = PATH_IMG_USER . $table->user_channel . ".jpeg";
+                                        } else {
+                                            $path = "https://secure.gravatar.com/avatar/83232f25bace98c04afdba2ef9eedd8d?s=61&d=mm&r=g";
+                                        }
+                                        $followers = getMinNumber(intval($table->followers_channel));
+                                        ?>
+                                        <div id="blog_wrapper_1715015991654711050"
+                                             class="blog-wrapper global-blog-wrapper blog-wrapper-control flex-row-control site__row"
+                                             style="margin-bottom: 20px;">
+                                            <article class="post-item site__col flex-row-control">
+                                                <div class="post-item-wrap">
+                                                    <div class="author-wrapper flex-row-control flex-vertical-middle">
+                                                        <a href="#"
+                                                           class="author-avatar-wrap"
+                                                           title="<?php echo $table->name_channel ?>">
+                                                            <img alt="Author Avatar"
+                                                                 src="<?php echo $path ?>"
+                                                                 sizes="(max-width: 61px) 100vw, 61px"
+                                                                 srcset="<?php echo $path ?>"
+                                                                 class="author-avatar" width="61" height="61"> </a>
+                                                        <div class="author-avatar-name-wrap">
+                                                            <h4 class="h5 author-avatar-name max-1line">
+                                                                <a href="#"
+                                                                   class="author-avatar-name-link"
+                                                                   title="<?php echo $table->name_channel ?>">
+                                                                    <?php
+                                                                    if ($table->is_live == "1") { // Checks if user is live
+                                                                        ?>
+                                                                        <i class="fas fa-check-circle author-verified is-verified"></i>
+                                                                        <?php
+                                                                    }
+                                                                    ?>
+                                                                    <span><?php echo $table->name_channel ?></span>
+                                                                </a>
+                                                            </h4>
+                                                            <span class="author-meta font-meta">
+<i class="icon far fa-heart"></i><span class="subscribers-count subscribers-count-control"
+                                       data-author-id="1"><span><?php echo $followers; ?></span><span
+                                                                            class="info-text">Followers</span></span>
+</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </article>
+                                        </div>
+                                        <?php
+                                    }
+                                }
+                                ?>
                             </div>
                             <script>
                                 vidmov_jav_js_object['blog_wrapper_1715015991654711050_params'] = {"beeteam368_author_query_order_id": "most_subscriptions"};
@@ -226,21 +342,28 @@
                                     "login__not_in": []
                                 };
                             </script>
-                            <nav class="beeteam368-pagination pagination-loadmore beeteam368-pagination flex-row-control flex-row-center flex-vertical-middle"
-                                 data-paged="1" data-template="template-parts/archive/item"
-                                 data-style="marguerite-author-widget"
-                                 data-append-id="#blog_wrapper_1715015991654711050"
-                                 data-query-id="blog_wrapper_1715015991654711050" data-total-pages="2">
-                                <button class="loadmore-btn loadmore-btn-control ">
-                                    <span class="loadmore-text loadmore-text-control">Load More</span>
-                                    <span class="loadmore-loading">
+                            <?php
+                            if ($counter >= 10) {
+                                ?>
+                                <nav class="beeteam368-pagination pagination-loadmore beeteam368-pagination flex-row-control flex-row-center flex-vertical-middle"
+                                     data-paged="1" data-template="template-parts/archive/item"
+                                     data-style="marguerite-author-widget"
+                                     data-append-id="#blog_wrapper_1715015991654711050"
+                                     data-query-id="blog_wrapper_1715015991654711050" data-total-pages="2">
+                                    <button class="loadmore-btn loadmore-btn-control recommended load-more"
+                                            data-count="0">
+                                        <span class="loadmore-text loadmore-text-control">Load More</span>
+                                        <span class="loadmore-loading">
 <span class="loadmore-indicator">
 <svg><polyline class="lm-back" points="1 6 4 6 6 11 10 1 12 6 15 6"></polyline> <polyline class="lm-front"
                                                                                           points="1 6 4 6 6 11 10 1 12 6 15 6"></polyline></svg>
 </span>
 </span>
-                                </button>
-                            </nav>
+                                    </button>
+                                </nav>
+                                <?php
+                            }
+                            ?>
                         </div>
                     </div>
                 </div>

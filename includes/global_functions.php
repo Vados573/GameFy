@@ -126,3 +126,22 @@ function getTemperature($city)
     $temperature = $response["main"]["temp"]; // In kelvin
     return $temperature - 273.15; // Convert to celsius and return
 }
+
+/**
+ * @param $number numeric The number to format
+ * @return string The formatted number
+ */
+function getMinNumber($number){
+    if ($number < 1000000) {
+        // Anything less than a million
+        $format = number_format($number);
+    } else if ($number < 1000000000) {
+        // Anything less than a billion
+        $format = number_format($number / 1000000, 2) . 'M';
+    } else {
+        // At least a billion
+        $format = number_format($number / 1000000000, 2) . 'B';
+    }
+
+    return $format;
+}

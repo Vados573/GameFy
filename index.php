@@ -1,3 +1,8 @@
+<?php
+require('includes/config.php');
+require('includes/global_functions.php');
+session_start();
+?>
 <html lang="en">
 <head>
     <title>Gamify</title>
@@ -36,181 +41,130 @@
                                                  class="swiper slider-larger swiper-initialized swiper-horizontal swiper-pointer-events swiper-backface-hidden">
                                                 <div class="swiper-wrapper" id="swiper-wrapper-5b109653102af4e772"
                                                      aria-live="polite">
-                                                    <div class="swiper-slide swiper-slide-active" style="width: 1860px;"
-                                                         role="group" aria-label="1 / 8">
-                                                        <article
-                                                                class="post-item flex-vertical-middle slider-preview-control"
-                                                                style="background-image: url('https://vm.beeteam368.net/wp-content/uploads/2021/11/woman-5652370_1920.jpg');">
-                                                            <div class="post-item-wrap site__container main__container-control site__container-fluid">
-                                                                <div class="site__row">
-                                                                    <div class="site__col">
-                                                                        <div class="slider-content">
-                                                                            <div class="posted-on ft-post-meta font-meta font-meta-size-12 flex-row-control">
-                                                                                <div class="post-lt-ft-left flex-row-control flex-vertical-middle">
-                                                                                    <div class="post-footer-item post-lt-comments post-lt-comment-control">
-                                                                                        <span class="beeteam368-icon-item small-item" style="background-color: #FF375F"><i
-                                                                                                    class="fas fa-heart"></i></span><span
-                                                                                                class="item-number">44</span>
-                                                                                        <span class="item-text">Followers</span>
-                                                                                    </div>
-                                                                                    <span class="post-footer-item post-lt-views post-lt-views-control">
-<span class="beeteam368-icon-item small-item"><i class="fas fa-eye"></i></span><span class="item-number">5.6K</span>
+                                                    <?php
+                                                    if (isset($_SESSION['id'])) {
+                                                        $sql = "SELECT channel.followers_channel, channel.name_channel, channel.id_channel, 
+                                                            stream.id_stream, game.name_game, stream.views_stream, stream.name_stream,
+                                                            CASE
+                                                                WHEN " . $_SESSION['id'] . " IN (SELECT id_user FROM follow WHERE follow.id_channel = channel.id_channel) THEN 1
+                                                                ELSE 0
+                                                            END AS Following
+                                                            FROM stream 
+                                                            JOIN channel ON channel.id_channel = stream.id_channel
+                                                            JOIN game ON stream.id_game = game.id_game 
+                                                            WHERE is_live_stream = 1
+                                                            ORDER BY channel.followers_channel DESC";
+                                                    } else {
+                                                        $sql = "SELECT channel.followers_channel, channel.name_channel, channel.id_channel, 
+                                                            stream.id_stream, game.name_game, stream.views_stream, stream.name_stream
+                                                            FROM stream 
+                                                            JOIN channel ON channel.id_channel = stream.id_channel
+                                                            JOIN game ON stream.id_game = game.id_game 
+                                                            WHERE is_live_stream = 1
+                                                            ORDER BY channel.followers_channel DESC";
+                                                    }
+                                                    $result = odbc_exec($con, $sql);
+                                                    $counter = 0;
+                                                    $slider = "";
+                                                    while ($table = odbc_fetch_object($result)) {
+                                                        if ($counter == 8) {
+                                                            break;
+                                                        }
+                                                        if ($counter == 0) {
+                                                            $slider = "swiper-slide-active";
+                                                        } elseif ($counter == 1) {
+                                                            $slider = "swiper-slide-next";
+                                                        }
+                                                        $fileName = $_SERVER["DOCUMENT_ROOT"] . "/GameFy/" . PATH_IMG_CHANNEL . $table->id_channel . ".jpeg";
+                                                        if (file_exists($fileName)) {
+                                                            $path = PATH_IMG_CHANNEL . $table->id_channel . ".jpeg";
+                                                        } else {
+                                                            $path = "https://i.pinimg.com/originals/3e/f1/d4/3ef1d460e6bb89eaa7d2fcf283795191.jpg";
+                                                        }
+                                                        $views = getMinNumber(intval($table->views_stream));
+                                                        $followers = getMinNumber(intval($table->followers_channel));
+                                                        ?>
+                                                        <div class="swiper-slide <?php echo $slider ?>"
+                                                             style="width: 1860px;"
+                                                             role="group">
+                                                            <article
+                                                                    class="post-item flex-vertical-middle slider-preview-control"
+                                                                    style="background-image: url(<?php echo $path ?>);">
+                                                                <div class="post-item-wrap site__container main__container-control site__container-fluid">
+                                                                    <div class="site__row">
+                                                                        <div class="site__col">
+                                                                            <div class="slider-content">
+                                                                                <div class="posted-on ft-post-meta font-meta font-meta-size-12 flex-row-control">
+                                                                                    <div class="post-lt-ft-left flex-row-control flex-vertical-middle">
+                                                                                        <div class="post-footer-item post-lt-comments post-lt-comment-control">
+                                                                                            <?php
+                                                                                            if (!isset($_SESSION['id'])) {
+                                                                                                ?>
+                                                                                                <span class="beeteam368-icon-item small-item"
+                                                                                                      style="background-color: #646464; cursor: default"
+                                                                                                      id="<?php echo $table->id_channel ?>"><i
+                                                                                                            class="fas fa-heart"></i></span>
+                                                                                                <?php
+                                                                                            } else {
+                                                                                                if ($table->Following == 0) {
+                                                                                                    ?>
+                                                                                                    <span class="beeteam368-icon-item small-item follow-change add"
+                                                                                                          style="background-color: #646464"
+                                                                                                          id="<?php echo $table->id_channel ?>"><i
+                                                                                                                class="fas fa-heart"></i></span>
+                                                                                                    <?php
+                                                                                                } else {
+                                                                                                    ?>
+                                                                                                    <span class="beeteam368-icon-item small-item follow-change remove"
+                                                                                                          style="background-color: #FF375F"
+                                                                                                          id="<?php echo $table->id_channel ?>"><i
+                                                                                                                class="fas fa-heart"></i></span>
+                                                                                                    <?php
+                                                                                                }
+                                                                                            }
+                                                                                            ?>
+                                                                                            <span
+                                                                                                    class="item-number"><?php echo $followers ?></span>
+                                                                                            <span class="item-text">Followers</span>
+                                                                                        </div>
+                                                                                        <span class="post-footer-item post-lt-views post-lt-views-control">
+<span class="beeteam368-icon-item small-item"><i
+            class="fas fa-eye"></i></span><span class="item-number"><?php echo $views ?></span>
 <span class="item-text">viewers</span>
 </span></div>
-                                                                            </div>
-                                                                            <h3 class="entry-title post-title max-2lines ">
-                                                                                <a class="post-listing-title"
-                                                                                   href="https://vm.beeteam368.net/video/zombie-massacre/"
-                                                                                   title="Zombie Massacre">Zombie
-                                                                                    Massacre</a>
-                                                                            </h3>
-                                                                            <div class="btn-slider-pro">
-                                                                                <a href="https://vm.beeteam368.net/video/zombie-massacre/"
-                                                                                   class="btnn-default btnn-primary"><i
-                                                                                            class="icon far fa-play-circle"></i><span>Watch NOW</span></a>
-                                                                                <button class="reverse slider-preview preview-mode-control"
-                                                                                        data-id="117">
-                                                                                    <i class="icon far fa-eye"></i><span>Preview</span>
-                                                                                </button>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </article>
-                                                    </div>
-                                                    <div class="swiper-slide swiper-slide-next" style="width: 1860px;"
-                                                         role="group" aria-label="2 / 8">
-                                                        <article
-                                                                class="post-item flex-vertical-middle slider-preview-control"
-                                                                style="background-image: url('https://vm.beeteam368.net/wp-content/uploads/2021/11/woman-5652370_1920.jpg');">
-                                                            <div class="post-item-wrap site__container main__container-control site__container-fluid">
-                                                                <div class="site__row">
-                                                                    <div class="site__col">
-                                                                        <div class="slider-content">
-                                                                            <div class="posted-on ft-post-meta font-meta font-meta-size-12 flex-row-control">
-                                                                                <div class="post-lt-ft-left flex-row-control flex-vertical-middle">
-                                                                                    <a href="https://vm.beeteam368.net/video/day-of-the-warrior/#comments"
-                                                                                       class="post-footer-item post-lt-comments post-lt-comment-control">
-                                                                                        <span class="beeteam368-icon-item small-item"><i
-                                                                                                    class="fas fa-comment-dots"></i></span><span
-                                                                                                class="item-number">0</span>
-                                                                                        <span class="item-text">comments</span>
-                                                                                    </a>
-                                                                                    <span class="post-footer-item post-lt-views post-lt-views-control">
-<span class="beeteam368-icon-item small-item"><i class="fas fa-eye"></i></span><span class="item-number">3.2K</span>
-<span class="item-text">views</span>
-</span></div>
-                                                                            </div>
-                                                                            <h3 class="entry-title post-title max-2lines ">
-                                                                                <a class="post-listing-title"
-                                                                                   href="https://vm.beeteam368.net/video/day-of-the-warrior/"
-                                                                                   title="Day of the Warrior">Day of the
-                                                                                    Warrior</a>
-                                                                            </h3>
-                                                                            <div class="btn-slider-pro">
-                                                                                <a href="https://vm.beeteam368.net/video/day-of-the-warrior/"
-                                                                                   class="btnn-default btnn-primary"><i
-                                                                                            class="icon far fa-play-circle"></i><span>Watch NOW</span></a>
-                                                                                <button class="reverse slider-preview preview-mode-control"
-                                                                                        data-id="127">
-                                                                                    <i class="icon far fa-eye"></i><span>Preview</span>
-                                                                                </button>
+                                                                                </div>
+                                                                                <h3 class="entry-title post-title max-2lines ">
+                                                                                    <a class="post-listing-title"
+                                                                                       href="#"
+                                                                                       title="<?php echo $table->name_stream ?>"><?php echo $table->name_stream ?></a>
+                                                                                </h3>
+                                                                                <span class="entry-title post-title max-2lines"
+                                                                                      style="font-size: 20px; font-family: var(--font__heading);">
+                                                                                Channel: <b><?php echo $table->name_channel ?></b>
+                                                                            </span>
+                                                                                <span class="entry-title post-title max-1lines"
+                                                                                      style="font-size: 15px; font-family: var(--font__heading);">
+                                                                                Game: <b><?php echo $table->name_game ?></b>
+                                                                            </span>
+                                                                                <div class="btn-slider-pro">
+                                                                                    <a href="#"
+                                                                                       class="btnn-default btnn-primary"><i
+                                                                                                class="icon far fa-play-circle"></i><span>Watch NOW</span></a>
+                                                                                    <button class="reverse slider-preview preview-mode-control"
+                                                                                            data-id="117">
+                                                                                        <i class="icon far fa-eye"></i><span>Preview</span>
+                                                                                    </button>
+                                                                                </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                        </article>
-                                                    </div>
-                                                    <div class="swiper-slide" style="width: 1860px;" role="group"
-                                                         aria-label="3 / 8">
-                                                        <article
-                                                                class="post-item flex-vertical-middle slider-preview-control"
-                                                                style="background-image: url('https://vm.beeteam368.net/wp-content/uploads/2021/11/hand-6494302_1920.jpg');">
-                                                            <div class="post-item-wrap site__container main__container-control site__container-fluid">
-                                                                <div class="site__row">
-                                                                    <div class="site__col">
-                                                                        <div class="slider-content">
-                                                                            <div class="posted-on ft-post-meta font-meta font-meta-size-12 flex-row-control">
-                                                                                <div class="post-lt-ft-left flex-row-control flex-vertical-middle">
-                                                                                    <a href="https://vm.beeteam368.net/video/killer-mechanic/#comments"
-                                                                                       class="post-footer-item post-lt-comments post-lt-comment-control">
-                                                                                        <span class="beeteam368-icon-item small-item"><i
-                                                                                                    class="fas fa-comment-dots"></i></span><span
-                                                                                                class="item-number">0</span>
-                                                                                        <span class="item-text">comments</span>
-                                                                                    </a>
-                                                                                    <span class="post-footer-item post-lt-views post-lt-views-control">
-<span class="beeteam368-icon-item small-item"><i class="fas fa-eye"></i></span><span class="item-number">2.2K</span>
-<span class="item-text">views</span>
-</span></div>
-                                                                            </div>
-                                                                            <h3 class="entry-title post-title max-2lines ">
-                                                                                <a class="post-listing-title"
-                                                                                   href="https://vm.beeteam368.net/video/killer-mechanic/"
-                                                                                   title="Killer Mechanic">Killer
-                                                                                    Mechanic</a>
-                                                                            </h3>
-                                                                            <div class="btn-slider-pro">
-                                                                                <a href="https://vm.beeteam368.net/video/killer-mechanic/"
-                                                                                   class="btnn-default btnn-primary"><i
-                                                                                            class="icon far fa-play-circle"></i><span>Watch NOW</span></a>
-                                                                                <button class="reverse slider-preview preview-mode-control"
-                                                                                        data-id="137">
-                                                                                    <i class="icon far fa-eye"></i><span>Preview</span>
-                                                                                </button>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </article>
-                                                    </div>
-                                                    <div class="swiper-slide" style="width: 1860px;" role="group"
-                                                         aria-label="4 / 8">
-                                                        <article
-                                                                class="post-item flex-vertical-middle slider-preview-control"
-                                                                style="background-image: url('https://vm.beeteam368.net/wp-content/uploads/2021/11/pexels-art-guzman-8091794.jpg');">
-                                                            <div class="post-item-wrap site__container main__container-control site__container-fluid">
-                                                                <div class="site__row">
-                                                                    <div class="site__col">
-                                                                        <div class="slider-content">
-                                                                            <div class="posted-on ft-post-meta font-meta font-meta-size-12 flex-row-control">
-                                                                                <div class="post-lt-ft-left flex-row-control flex-vertical-middle">
-                                                                                    <a href="https://vm.beeteam368.net/video/snipers-bulletproof/#comments"
-                                                                                       class="post-footer-item post-lt-comments post-lt-comment-control">
-                                                                                        <span class="beeteam368-icon-item small-item"><i
-                                                                                                    class="fas fa-comment-dots"></i></span><span
-                                                                                                class="item-number">0</span>
-                                                                                        <span class="item-text">comments</span>
-                                                                                    </a>
-                                                                                    <span class="post-footer-item post-lt-views post-lt-views-control">
-<span class="beeteam368-icon-item small-item"><i class="fas fa-eye"></i></span><span class="item-number">1.1K</span>
-<span class="item-text">views</span>
-</span></div>
-                                                                            </div>
-                                                                            <h3 class="entry-title post-title max-2lines ">
-                                                                                <a class="post-listing-title"
-                                                                                   href="https://vm.beeteam368.net/video/snipers-bulletproof/"
-                                                                                   title="Snipers Bulletproof">Snipers
-                                                                                    Bulletproof</a>
-                                                                            </h3>
-                                                                            <div class="btn-slider-pro">
-                                                                                <a href="https://vm.beeteam368.net/video/snipers-bulletproof/"
-                                                                                   class="btnn-default btnn-primary"><i
-                                                                                            class="icon far fa-play-circle"></i><span>Watch NOW</span></a>
-                                                                                <button class="reverse slider-preview preview-mode-control"
-                                                                                        data-id="141">
-                                                                                    <i class="icon far fa-eye"></i><span>Preview</span>
-                                                                                </button>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </article>
-                                                    </div>
+                                                            </article>
+                                                        </div>
+                                                        <?php
+                                                        $counter++;
+                                                    }
+                                                    ?>
                                                 </div>
                                                 <span class="swiper-notification" aria-live="assertive"
                                                       aria-atomic="true"></span></div>
@@ -220,143 +174,71 @@
                                                     <div class="swiper-wrapper"
                                                          style="transform: translate3d(0px, 0px, 0px);"
                                                          id="swiper-wrapper-6bb2302f63dafadd" aria-live="polite">
-                                                        <div class="swiper-slide swiper-slide-visible swiper-slide-active swiper-slide-thumb-active"
-                                                             style="margin-bottom: 30px;" role="group"
-                                                             aria-label="1 / 8">
-                                                            <article class="post-item">
-                                                                <h3 style="display:none !important">Zombie Massacre</h3>
-                                                                <div class="post-featured-image preview-mode-control"
-                                                                     data-id="117">
-                                                                    <div class="beeteam368-bt-to-img flex-row-control flex-vertical-middle dark-mode first-show">
+                                                        <!--           TODO:    Add sql loop here for mini slider on the right                                         -->
+                                                        <?php
+                                                        $sql = "SELECT channel.name_channel, channel.id_channel, stream.id_stream, stream.name_stream 
+                                                            FROM stream 
+                                                            JOIN channel ON channel.id_channel = stream.id_channel
+                                                            WHERE is_live_stream = 1
+                                                            ORDER BY channel.followers_channel DESC";
+                                                        $result = odbc_exec($con, $sql);
+                                                        $counter = 0;
+                                                        $slider = "";
+                                                        while ($table = odbc_fetch_object($result)) {
+                                                            if ($counter == 8) {
+                                                                break;
+                                                            }
+                                                            if ($counter == 0) {
+                                                                $slider = "swiper-slide-visible swiper-slide-active swiper-slide-thumb-active";
+                                                            } elseif ($counter == 1) {
+                                                                $slider = "swiper-slide-visible swiper-slide-next";
+                                                            } elseif ($counter == 2) {
+                                                                $slider = "swiper-slide-visible";
+                                                            }
+                                                            $fileName = $_SERVER["DOCUMENT_ROOT"] . "/GameFy/" . PATH_IMG_CHANNEL . $table->id_channel . ".jpeg";
+                                                            if (file_exists($fileName)) {
+                                                                $path = PATH_IMG_CHANNEL . $table->id_channel . ".jpeg";
+                                                            } else {
+                                                                $path = "https://i.pinimg.com/originals/3e/f1/d4/3ef1d460e6bb89eaa7d2fcf283795191.jpg";
+                                                            }
+                                                            ?>
+                                                            <div class="swiper-slide <?php echo $slider ?>"
+                                                                 style="margin-bottom: 30px;" role="group">
+                                                                <article class="post-item">
+                                                                    <h3 style="display:none !important"><?php echo $table->name_stream ?></h3>
+                                                                    <div class="post-featured-image preview-mode-control"
+                                                                         data-id="117">
+                                                                        <div class="beeteam368-bt-to-img flex-row-control flex-vertical-middle dark-mode first-show">
                                                                         <span class="trending-icon font-size-12 flex-vertical-middle"><i
                                                                                     class="fas fa-bolt"></i>&nbsp;&nbsp;<span>#1</span></span>
-                                                                    </div>
-                                                                    <img src="https://vm.beeteam368.net/wp-content/uploads/2021/11/zombie-1801470_1920-300x169.jpg"
-                                                                         class="blog-img slider-count" alt=""
-                                                                         srcset="https://vm.beeteam368.net/wp-content/uploads/2021/11/zombie-1801470_1920-300x169.jpg 300w, https://vm.beeteam368.net/wp-content/uploads/2021/11/zombie-1801470_1920-1600x900.jpg 1600w, https://vm.beeteam368.net/wp-content/uploads/2021/11/zombie-1801470_1920-420x237.jpg 420w, https://vm.beeteam368.net/wp-content/uploads/2021/11/zombie-1801470_1920-800x450.jpg 800w"
-                                                                         sizes="(max-width: 300px) 100vw, 300px"
-                                                                         width="300" height="169">
-                                                                    <div class="beeteam368-bt-ft-img second-show flex-row-control flex-vertical-middle tiny-icons dark-mode">
-                                                                        <a class="beeteam368-icon-item reg-log-popup-control"
-                                                                           href="https://vm.beeteam368.net/main-login/"
-                                                                           data-note="Sign in to add posts to watch later."
-                                                                           data-id="117">
-                                                                            <i class="fas fa-clock"></i>
-                                                                        </a>
-                                                                    </div>
-                                                                    <div class="beeteam368-bt-ft-img first-show flex-row-control flex-vertical-middle">
-                                                                       <span class="post-footer-item post-lt-views post-lt-views-control" style="margin: 0">
-                                                                        <span class="beeteam368-icon-item small-item" style="background-color: red;width: 39px; height:20px; border-radius: 5px">Live</span>
+                                                                        </div>
+                                                                        <img src="https://vm.beeteam368.net/wp-content/uploads/2021/11/zombie-1801470_1920-300x169.jpg"
+                                                                             class="blog-img slider-count" alt=""
+                                                                             srcset="<?php echo $path ?>"
+                                                                             sizes="(max-width: 300px) 100vw, 300px"
+                                                                             width="300" height="169">
+                                                                        <div class="beeteam368-bt-ft-img second-show flex-row-control flex-vertical-middle tiny-icons dark-mode">
+                                                                            <a class="beeteam368-icon-item reg-log-popup-control"
+                                                                               href="https://vm.beeteam368.net/main-login/"
+                                                                               data-note="Sign in to add posts to watch later."
+                                                                               data-id="117">
+                                                                                <i class="fas fa-clock"></i>
+                                                                            </a>
+                                                                        </div>
+                                                                        <div class="beeteam368-bt-ft-img first-show flex-row-control flex-vertical-middle">
+                                                                       <span class="post-footer-item post-lt-views post-lt-views-control"
+                                                                             style="margin: 0">
+                                                                        <span class="beeteam368-icon-item small-item"
+                                                                              style="background-color: red;width: 39px; height:20px; border-radius: 5px">Live</span>
                                                                        </span>
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                            </article>
-                                                        </div>
-                                                        <div class="swiper-slide swiper-slide-visible swiper-slide-next"
-                                                             style="margin-bottom: 30px;" role="group"
-                                                             aria-label="2 / 8">
-                                                            <article class="post-item">
-                                                                <h3 style="display:none !important">Day of the
-                                                                    Warrior</h3>
-                                                                <div class="post-featured-image preview-mode-control"
-                                                                     data-id="127">
-                                                                    <div class="beeteam368-bt-to-img flex-row-control flex-vertical-middle dark-mode first-show">
-                                                                        <span class="trending-icon font-size-12 flex-vertical-middle"><i
-                                                                                    class="fas fa-bolt"></i>&nbsp;&nbsp;<span>#5</span></span>
-                                                                    </div>
-                                                                    <img src="https://vm.beeteam368.net/wp-content/uploads/2021/11/cosplay-5344250_1920-1-300x169.jpg"
-                                                                         class="blog-img slider-count" alt=""
-                                                                         srcset="https://vm.beeteam368.net/wp-content/uploads/2021/11/cosplay-5344250_1920-1-300x169.jpg 300w, https://vm.beeteam368.net/wp-content/uploads/2021/11/cosplay-5344250_1920-1-1600x900.jpg 1600w, https://vm.beeteam368.net/wp-content/uploads/2021/11/cosplay-5344250_1920-1-420x237.jpg 420w, https://vm.beeteam368.net/wp-content/uploads/2021/11/cosplay-5344250_1920-1-800x450.jpg 800w"
-                                                                         sizes="(max-width: 300px) 100vw, 300px"
-                                                                         width="300" height="169">
-                                                                    <div class="beeteam368-bt-ft-img second-show flex-row-control flex-vertical-middle tiny-icons dark-mode">
-                                                                        <a class="beeteam368-icon-item reg-log-popup-control"
-                                                                           href="https://vm.beeteam368.net/main-login/"
-                                                                           data-note="Sign in to add posts to watch later."
-                                                                           data-id="127">
-                                                                            <i class="fas fa-clock"></i>
-                                                                        </a>
-                                                                    </div>
-                                                                    <div class="beeteam368-bt-ft-img first-show flex-row-control flex-vertical-middle">
-                                                                       <span class="post-footer-item post-lt-views post-lt-views-control" style="margin: 0">
-                                                                        <span class="beeteam368-icon-item small-item" style="background-color: red;width: 39px; height:20px; border-radius: 5px">Live</span>
-                                                                       </span>
-                                                                    </div>
-                                                                </div>
-                                                            </article>
-                                                        </div>
-                                                        <div class="swiper-slide swiper-slide-visible" style="margin-bottom: 30px;" role="group" aria-label="3 / 8">
-                                                            <article class="post-item">
-                                                                <h3 style="display:none !important">Killer Mechanic</h3>
-                                                                <div class="post-featured-image preview-mode-control"
-                                                                     data-id="137">
-                                                                    <div class="beeteam368-bt-to-img flex-row-control flex-vertical-middle dark-mode first-show">
-                                                                        <span class="trending-icon font-size-12 flex-vertical-middle"><i
-                                                                                    class="fas fa-bolt"></i>&nbsp;&nbsp;<span>#9</span></span>
-                                                                    </div>
-                                                                    <img src="https://vm.beeteam368.net/wp-content/uploads/2021/11/hand-6494302_1920-300x169.jpg"
-                                                                         class="blog-img slider-count" alt=""
-                                                                         srcset="https://vm.beeteam368.net/wp-content/uploads/2021/11/hand-6494302_1920-300x169.jpg 300w, https://vm.beeteam368.net/wp-content/uploads/2021/11/hand-6494302_1920-1600x900.jpg 1600w, https://vm.beeteam368.net/wp-content/uploads/2021/11/hand-6494302_1920-420x237.jpg 420w, https://vm.beeteam368.net/wp-content/uploads/2021/11/hand-6494302_1920-800x450.jpg 800w"
-                                                                         sizes="(max-width: 300px) 100vw, 300px"
-                                                                         width="300" height="169">
-                                                                    <div class="beeteam368-bt-ft-img second-show flex-row-control flex-vertical-middle tiny-icons dark-mode">
-                                                                        <a class="beeteam368-icon-item reg-log-popup-control"
-                                                                           href="https://vm.beeteam368.net/main-login/"
-                                                                           data-note="Sign in to add posts to watch later."
-                                                                           data-id="137">
-                                                                            <i class="fas fa-clock"></i>
-                                                                        </a>
-                                                                    </div>
-                                                                    <div class="beeteam368-bt-ft-img first-show flex-row-control flex-vertical-middle">
-                                                                        <span class="review-score-wrapper review-score-wrapper-control small-size dark-mode  rv-percent"
-                                                                              data-id="137"
-                                                                              style="background-image:linear-gradient(270deg, var(--color__main-circle-score-percent) 50%, transparent 50%), linear-gradient(374.4deg, var(--color__main-circle-score-percent) 50%, var(--color__sub-circle-score-percent) 50%);"><span
-                                                                                    class="review-score-percent review-score-percent-control h6"
-                                                                                    data-id="137">79<span
-                                                                                        class="review-percent font-main font-size-8">%</span></span></span><span
-                                                                                class="label-icon sales-count font-size-12"><i
-                                                                                    class="fas fa-chart-line"></i>&nbsp;&nbsp; 0</span>
-                                                                    </div>
-                                                                </div>
-                                                            </article>
-                                                        </div>
-                                                        <div class="swiper-slide" style="margin-bottom: 30px;"
-                                                             role="group" aria-label="4 / 8">
-                                                            <article class="post-item">
-                                                                <h3 style="display:none !important">Snipers
-                                                                    Bulletproof</h3>
-                                                                <div class="post-featured-image preview-mode-control"
-                                                                     data-id="141">
-                                                                    <div class="beeteam368-bt-to-img flex-row-control flex-vertical-middle dark-mode first-show">
-                                                                        <span class="trending-icon font-size-12 flex-vertical-middle"><i
-                                                                                    class="fas fa-bolt"></i>&nbsp;&nbsp;<span>#24</span></span>
-                                                                    </div>
-                                                                    <img src="https://vm.beeteam368.net/wp-content/uploads/2021/11/pexels-art-guzman-8091794-300x169.jpg"
-                                                                         class="blog-img slider-count" alt=""
-                                                                         srcset="https://vm.beeteam368.net/wp-content/uploads/2021/11/pexels-art-guzman-8091794-300x169.jpg 300w, https://vm.beeteam368.net/wp-content/uploads/2021/11/pexels-art-guzman-8091794-1600x900.jpg 1600w, https://vm.beeteam368.net/wp-content/uploads/2021/11/pexels-art-guzman-8091794-420x237.jpg 420w, https://vm.beeteam368.net/wp-content/uploads/2021/11/pexels-art-guzman-8091794-800x450.jpg 800w"
-                                                                         sizes="(max-width: 300px) 100vw, 300px"
-                                                                         width="300" height="169">
-                                                                    <div class="beeteam368-bt-ft-img second-show flex-row-control flex-vertical-middle tiny-icons dark-mode">
-                                                                        <a class="beeteam368-icon-item reg-log-popup-control"
-                                                                           href="https://vm.beeteam368.net/main-login/"
-                                                                           data-note="Sign in to add posts to watch later."
-                                                                           data-id="141">
-                                                                            <i class="fas fa-clock"></i>
-                                                                        </a>
-                                                                    </div>
-                                                                    <div class="beeteam368-bt-ft-img first-show flex-row-control flex-vertical-middle">
-                                                                        <span class="review-score-wrapper review-score-wrapper-control small-size dark-mode  rv-percent"
-                                                                              data-id="141"
-                                                                              style="background-image:linear-gradient(270deg, var(--color__main-circle-score-percent) 50%, transparent 50%), linear-gradient(370.8deg, var(--color__main-circle-score-percent) 50%, var(--color__sub-circle-score-percent) 50%);"><span
-                                                                                    class="review-score-percent review-score-percent-control h6"
-                                                                                    data-id="141">78<span
-                                                                                        class="review-percent font-main font-size-8">%</span></span></span><span
-                                                                                class="label-icon sales-count font-size-12"><i
-                                                                                    class="fas fa-chart-line"></i>&nbsp;&nbsp; 0</span>
-                                                                    </div>
-                                                                </div>
-                                                            </article>
-                                                        </div>
+                                                                </article>
+                                                            </div>
+                                                            <?php
+                                                            $counter++;
+                                                        }
+                                                        ?>
                                                     </div>
                                                     <span class="swiper-notification" aria-live="assertive"
                                                           aria-atomic="true"></span></div>

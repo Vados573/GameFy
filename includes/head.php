@@ -1,6 +1,3 @@
-<?php
-    session_start();
-?>
 <style type="text/css">
     .heateor_sss_button_instagram span.heateor_sss_svg,a.heateor_sss_instagram span.heateor_sss_svg{background:radial-gradient(circle at 30% 107%,#fdf497 0,#fdf497 5%,#fd5949 45%,#d6249f 60%,#285aeb 90%)}
     .heateor_sss_horizontal_sharing .heateor_sss_svg,.heateor_sss_standard_follow_icons_container .heateor_sss_svg{
@@ -122,6 +119,9 @@
 <link rel="icon" href="https://vm.beeteam368.net/wp-content/uploads/2022/01/cropped-favicon-32x32.png" sizes="32x32" />
 <link rel="icon" href="https://vm.beeteam368.net/wp-content/uploads/2022/01/cropped-favicon-192x192.png" sizes="192x192" />
 <link rel="apple-touch-icon" href="https://vm.beeteam368.net/wp-content/uploads/2022/01/cropped-favicon-180x180.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap" rel="stylesheet">
 <meta name="msapplication-TileImage" content="https://vm.beeteam368.net/wp-content/uploads/2022/01/cropped-favicon-270x270.png" />
 <style id="wp-custom-css">
     .hide-heading-control .top-section-title,

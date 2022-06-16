@@ -1,5 +1,10 @@
 <?php
 require ('includes/config.php');
+session_start();
+//if (isset($_SESSION['id'])) {
+//    header("Location: " . URL . "/index.php");
+//}
+
 ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -28,11 +33,6 @@ require ('includes/config.php');
 <div id="loader">
 
 </div>
-<?php
-if (isset($_SESSION['id'])) {
-    header("Location: " . URL . "/index.php");
-}
-?>
 
 <section class="login-signup">
     <div class="container p-5" style="display: none" id="error-div">
