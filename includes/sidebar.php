@@ -16,7 +16,7 @@
                     <div class="side-close-btn ctrl-show-hidden-elm flex-row-control flex-vertical-middle">
                         <div class="layer-hidden">
                             <div class="beeteam368-logo-wrap elm-logo-side">
-                                <a href="https://vm.beeteam368.net/" title="VidMov Theme"
+                                <a href="index.php" title="VidMov Theme"
                                    class="beeteam368-logo-link h6 side-logo-control">
                                     <img alt="VidMov Theme" src="assets/images/secondLogo.png"
                                          sizes="(max-width: 92px) 100vw, 92px" width="92" height="30"> </a>
@@ -55,22 +55,16 @@
                             style="display: none;">
                             <li id="menu-item-80"
                                 class="menu-item menu-item-type-taxonomy menu-item-object-vidmov_video_category menu-item-80">
-                                <a href="https://vm.beeteam368.net/video-category/gaming/">Gaming</a></li>
+                                <a href="https://vm.beeteam368.net/video-category/gaming/">Streams</a></li>
                             <li id="menu-item-81"
                                 class="menu-item menu-item-type-taxonomy menu-item-object-vidmov_video_category menu-item-81">
-                                <a href="https://vm.beeteam368.net/video-category/movies/">Movies</a></li>
+                                <a href="https://vm.beeteam368.net/video-category/movies/">Videos</a></li>
                             <li id="menu-item-82"
                                 class="menu-item menu-item-type-taxonomy menu-item-object-vidmov_video_category menu-item-82">
-                                <a href="https://vm.beeteam368.net/video-category/sports/">Sports</a></li>
+                                <a href="https://vm.beeteam368.net/video-category/sports/">Events</a></li>
                             <li id="menu-item-79"
                                 class="menu-item menu-item-type-taxonomy menu-item-object-vidmov_video_category menu-item-79">
-                                <a href="https://vm.beeteam368.net/video-category/entertainment/">Entertainment</a></li>
-                            <li id="menu-item-83"
-                                class="menu-item menu-item-type-taxonomy menu-item-object-vidmov_audio_category menu-item-83">
-                                <a href="https://vm.beeteam368.net/audio-category/music/">Music</a></li>
-                            <li id="menu-item-84"
-                                class="menu-item menu-item-type-taxonomy menu-item-object-vidmov_series_category menu-item-84">
-                                <a href="https://vm.beeteam368.net/series-category/tv-shows/">TV Shows</a></li>
+                                <a href="https://vm.beeteam368.net/video-category/entertainment/">Blogs</a></li>
                         </ul>
                         <?php
                         if (isset($_SESSION['id'])) {
@@ -110,7 +104,7 @@
                                              style="width: var(--width__side-menu-hide);padding: 10px 0;">
                                         <div class="post-item-wrap" style="width: 100%;">
                                             <div class="author-wrapper flex-row-control flex-vertical-middle">
-                                                <a href="#"
+                                                <a href="profile.php?id=<?php echo $table->id_user?>"
                                                    class="author-avatar-wrap"
                                                    title="<?php echo $table->name_channel ?>" style="margin: auto">
                                                     <img alt="Author Avatar"
@@ -120,7 +114,7 @@
                                                          class="author-avatar" width="61" height="61"> </a>
                                                 <div class="author-avatar-name-wrap layer-hidden" style="display:none;">
                                                     <h4 class="h5 author-avatar-name max-1line">
-                                                        <a href="#"
+                                                        <a href="channel.php?id=<?php echo $table->id_channel?>""
                                                            class="author-avatar-name-link"
                                                            title="<?php echo $table->name_channel ?>">
                                                             <?php
@@ -205,7 +199,7 @@
                                             <article class="post-item site__col flex-row-control">
                                                 <div class="post-item-wrap">
                                                     <div class="author-wrapper flex-row-control flex-vertical-middle">
-                                                        <a href="#"
+                                                        <a href="profile.php?id=<?php echo $table->id_user?>""
                                                            class="author-avatar-wrap"
                                                            title="<?php echo $table->name_channel ?>">
                                                             <img alt="Author Avatar"
@@ -215,7 +209,7 @@
                                                                  class="author-avatar" width="61" height="61"> </a>
                                                         <div class="author-avatar-name-wrap">
                                                             <h4 class="h5 author-avatar-name max-1line">
-                                                                <a href="#"
+                                                                <a href="channel.php?id=<?php echo $table->id_channel?>""
                                                                    class="author-avatar-name-link"
                                                                    title="<?php echo $table->name_channel ?>">
                                                                     <?php

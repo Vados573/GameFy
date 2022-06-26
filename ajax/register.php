@@ -66,7 +66,7 @@ $password = $password . $salt;
 $password = hash("sha512", $password);
 
 try {
-    $preparation = odbc_prepare($con, 'INSERT INTO user VALUES (null, ?, ?, ?, ?, ?, ?, ?)');
+    $preparation = odbc_prepare($con, 'INSERT INTO user VALUES (null, ?, ?, ?, ?, ?, ?, ?, null, null, null)');
     $array_param = array();
     array_push($array_param, $username, $password, $salt, $email, 0, 1, 0);
     $success = odbc_execute($preparation, $array_param);

@@ -42,7 +42,8 @@ require('includes/global_functions.php');
                                             <div id="beeteam368_player_75361655217589-st-player">
                                                 <div id="beeteam368_player_75361655217589-st-player-iframe-overlay"
                                                      class="mejs__iframe-overlay"></div>
-                          <!--Iframe -->                      <div style="position:relative;padding-bottom:56.25%;overflow:hidden;height:0;max-width:100%;"><iframe id="b769c32d-899d-2abe-d394-c724efe3f5e3" src="https://iframe.dacast.com/live/16261caf-17f2-3707-02ba-ca4a1699dc31/b769c32d-899d-2abe-d394-c724efe3f5e3" width="100%" height="100%" frameborder="0" scrolling="no" allow="autoplay;encrypted-media" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen style="position:absolute;top:0;left:0;"></iframe></div>
+                          <!--Iframe -->                      <div style="position:relative;padding-bottom:56.25%;overflow:hidden;height:0;max-width:100%;">
+                                                    <iframe id="b769c32d-899d-2abe-d394-c724efe3f5e3" src="https://iframe.dacast.com/live/16261caf-17f2-3707-02ba-ca4a1699dc31/b769c32d-899d-2abe-d394-c724efe3f5e3" width="100%" height="100%" frameborder="0" scrolling="no" allow="autoplay;encrypted-media" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen style="position:absolute;top:0;left:0;"></iframe></div>
 <!--                                                <iframe id="beeteam368_player_75361655217589-st-player_youtube_iframe"-->
 <!--                                                        allowfullscreen="1"-->
 <!--                                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"-->

@@ -141,3 +141,11 @@ i {
 .post-featured-image{
     background-color: black;
 }
+
+.selected-filter{
+    color: var(--color__main) !important;
+}
+
+.menu-item > a:hover{
+    color: var(--color__main) !important;
+}

@@ -145,3 +145,243 @@ function getMinNumber($number){
 
     return $format;
 }
+
+/**
+ * Checks if string doesn't contain special characters
+ * @param $string string The text to check
+ * @return bool True if the text is clean false otherwise
+ */
+function checkString($string) {
+    if (preg_match('/[£$%*()}{@#~><|=_+¬-]/', $string)){
+        return false;
+    }
+    else{
+        return true;
+    }
+}
+
+/**
+ * Create live stream. This function is in Beta and still need a lot of upgrades
+ * @param $name string The name of the stream to create
+ * @param int $record If the user is recording
+ */
+function createLive($name ,$record = true, $public = true){
+    if ($_SESSION['authTime'] <= strtotime("-1 hour")){
+        refreshApi();
+    }
+    $authToken = $_SESSION['authToken'];
+    $curl = curl_init();
+    $authorization = "Authorization: Bearer $authToken";
+    $data = array("name" => $name, "record" => $record, "public" => $public);
+    $postData = json_encode($data);
+    curl_setopt_array($curl, array(
+        CURLOPT_URL => "https://ws.api.video/live-streams",
+        CURLOPT_HTTPHEADER => array(
+            "Content-Type: text/plain",
+            $authorization
+        ),
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_POSTFIELDS => $postData,
+        CURLOPT_ENCODING => "",
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => "POST"
+    ));
+
+    $response = curl_exec($curl);
+    curl_close($curl);
+    return $response;
+}
+
+/**
+ * Send authentication request to api
+ * @return bool|string False on error or Json string that contains the auth Token and refresh Token
+ */
+function authApi(){
+    $curl = curl_init();
+    $data = array("apiKey" => API_KEY);
+    $postData = json_encode($data);
+    curl_setopt_array($curl, array(
+        CURLOPT_URL => "https://ws.api.video/auth/api-key",
+        CURLOPT_HTTPHEADER => array(
+            "Content-Type: text/plain",
+        ),
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_POSTFIELDS => $postData,
+        CURLOPT_ENCODING => "",
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => "POST"
+    ));
+
+    $response = curl_exec($curl);
+    curl_close($curl);
+    return $response;
+}
+
+function refreshApi(){
+    $curl = curl_init();
+    $data = array("refreshToken" => $_SESSION['refreshToken']);
+    $postData = json_encode($data);
+    curl_setopt_array($curl, array(
+        CURLOPT_URL => "https://ws.api.video/auth/refresh",
+        CURLOPT_HTTPHEADER => array(
+            "Content-Type: text/plain",
+        ),
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_POSTFIELDS => $postData,
+        CURLOPT_ENCODING => "",
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => "POST"
+    ));
+
+    $response = curl_exec($curl);
+    curl_close($curl);
+    $refreshJson = json_decode($response, true);
+    $_SESSION['authToken'] = $refreshJson['access_token'];
+    $_SESSION['refreshToken'] = $refreshJson['refresh_token'];
+    $_SESSION['authTime'] = strtotime(date('y-m-d H:i:s'));
+}
+
+/**
+ * @param $idLive string Live of the id to update
+ * @param $name string Updated name of the stream
+ * @param $record bool True if live should be recorded, False otherwise
+ * @return bool True on success or False on fail
+ */
+function updateLive($idLive, $name = null, $record = null){
+    if ($_SESSION['authTime'] <= strtotime("-1 hour")){
+        refreshApi();
+    }
+    $authToken = $_SESSION['authToken'];
+    $authorization = "Authorization: Bearer $authToken";
+    $curl = curl_init();
+    $data = array();
+    if ($name != null){
+        $data["name"] = $name;
+    }
+    if($record != null){
+        $data["record"] = $record;
+    }
+    else{
+        $data["record"] = false;
+    }
+    $postData = json_encode($data);
+    curl_setopt_array($curl, array(
+        CURLOPT_URL => "https://ws.api.video/live-streams/" . $idLive,
+        CURLOPT_HTTPHEADER => array(
+            "Content-Type: text/plain",
+            $authorization
+        ),
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_POSTFIELDS => $postData,
+        CURLOPT_ENCODING => "",
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => "PATCH"
+    ));
+    $response = curl_exec($curl);
+    if ($response != false){
+        $response = true;
+    }
+    return $response;
+}
+
+/**
+ * @param $idStream string stream id of the video
+ * @param $sortBy string The variable to sort with
+ * @param $sortOrder string Order by asc or desc
+ * @return bool|string Response on success or False on fail
+ */
+function getVideos($idStream = null, $sortBy = null, $sortOrder = "asc"){
+    if ($_SESSION['authTime'] <= strtotime("-1 hour")){
+        print_r($_SESSION['authTime'] . " ");
+        print_r(strtotime("-1 hour"));
+        die("test");
+        refreshApi();
+    }
+    $authToken = $_SESSION['authToken'];
+    $authorization = "Authorization: Bearer $authToken";
+    $curl = curl_init();
+    $data = array();
+    if ($idStream != null){
+        $data["liveStreamId"] = $idStream;
+    }
+    if($sortBy != null){
+        $data["sortBy"] = $sortBy;
+        $data["sortOrder"] = $sortOrder;
+    }
+    $postData = json_encode($data);
+    curl_setopt_array($curl, array(
+        CURLOPT_URL => "https://ws.api.video/videos",
+        CURLOPT_HTTPHEADER => array(
+            "Content-Type: text/plain",
+            $authorization
+        ),
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_POSTFIELDS => $postData,
+        CURLOPT_ENCODING => "",
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => "GET"
+    ));
+    $response = curl_exec($curl);
+    return $response;
+}
+
+function get_time_ago( $time )
+{
+    $time_difference = time() - $time;
+
+    if( $time_difference < 1 ) { return 'less than 1 second ago'; }
+    $condition = array( 12 * 30 * 24 * 60 * 60 =>  'year',
+        30 * 24 * 60 * 60       =>  'month',
+        24 * 60 * 60            =>  'day',
+        60 * 60                 =>  'hour',
+        60                      =>  'minute',
+        1                       =>    'second'
+    );
+
+    foreach( $condition as $secs => $str )
+    {
+        $d = $time_difference / $secs;
+
+        if( $d >= 1 )
+        {
+            $t = round( $d );
+            return 'about ' . $t . ' ' . $str . ( $t > 1 ? 's' : '' ) . ' ago';
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

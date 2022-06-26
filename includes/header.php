@@ -12,7 +12,7 @@
                 </div>
                 <div class="site__col auto-width beeteam368-logo">
                     <div class="beeteam368-logo-wrap">
-                        <a href="https://vm.beeteam368.net/" title="VidMov Theme"
+                        <a href="index.php" title="VidMov Theme"
                            class="beeteam368-logo-link h1 main-logo-control">
                             <img alt="VidMov Theme"
                                  src="assets/images/mainLogo.png"
@@ -24,7 +24,8 @@
                     <div class="beeteam368-searchbox-wrap beeteam368-searchbox-wrap-control flex-row-control flex-vertical-middle ">
                         <form action="search.php" method="get" class="beeteam368-searchform" style="margin: auto">
                             <input id="beeteam368-searchtext"
-                                   class="beeteam368-searchtext beeteam368-searchtext-control seach-area" autocomplete="off"
+                                   class="beeteam368-searchtext beeteam368-searchtext-control search-area"
+                                   autocomplete="off"
                                    type="text" placeholder="Search ..." name="s" value="">
                             <span class="beetam368-back-focus beetam368-back-focus-control flex-row-control flex-vertical-middle flex-row-center"><i
                                         class="fas fa-arrow-left"></i></span>
@@ -44,92 +45,91 @@
                                     <span class="beeteam368-icon-item small-item primary-color"><i
                                                 class="fas fa-search"></i></span>
                                     <span class="beeteam368-suggestion-item-content search-with-keyword">
-<span class="beeteam368-suggestion-item-title h6 h-light">Search For: <span
-            class="beeteam368-sg-keyword beeteam368-sg-keyword-control font-weight-bold">Movie should be distinctly</span></span>
 </span>
                                     <span class="beeteam368-suggestion-item-content search-with-default">
 <span class="beeteam368-suggestion-item-title h6 font-weight-bold">Please enter a search term in the search box.</span>
 </span>
                                 </a>
                                 <div class="beeteam368-sg-new-posts beeteam368-live-search-control">
-                                    <h5 class="beeteam368-sg-new-posts-heading sg-heading-default">Search</h5>
-                                    <h5 class="beeteam368-sg-new-posts-heading sg-heading-dynamic">Search</h5>
+                                    <div id = "search-result">
+
+                                    </div>
                                 </div>
-                                <div class="beeteam368-sg-new-posts beeteam368-live-search-control">
-                                    <h5 class="beeteam368-sg-new-posts-heading sg-heading-default">Do Not Miss</h5>
-                                    <h5 class="beeteam368-sg-new-posts-heading sg-heading-dynamic">Search
-                                        Suggestions</h5>
-                                    <a href="https://vm.beeteam368.net/audio/red-roses/"
-                                       class="beeteam368-suggestion-item beeteam368-suggestion-item-default flex-row-control flex-vertical-middle">
-                                        <span class="beeteam368-icon-item small-item"><i class="fas fa-quote-left"></i></span>
-                                        <span class="beeteam368-suggestion-item-content">
-<span class="beeteam368-suggestion-item-title h6 h-light">Red Roses</span>
-<span class="beeteam368-suggestion-item-tax font-size-10">Audio</span>
-</span>
-                                        <span class="beeteam368-suggestion-item-image"><img
-                                                    src="https://vm.beeteam368.net/wp-content/uploads/2021/12/elice-moore-E-AUpYXbjM-unsplash-150x150.jpg"
-                                                    class="blog-img" alt=""
-                                                    srcset="https://vm.beeteam368.net/wp-content/uploads/2021/12/elice-moore-E-AUpYXbjM-unsplash-150x150.jpg 150w, https://vm.beeteam368.net/wp-content/uploads/2021/12/elice-moore-E-AUpYXbjM-unsplash-300x300.jpg 300w, https://vm.beeteam368.net/wp-content/uploads/2021/12/elice-moore-E-AUpYXbjM-unsplash-420x420.jpg 420w, https://vm.beeteam368.net/wp-content/uploads/2021/12/elice-moore-E-AUpYXbjM-unsplash-800x800.jpg 800w"
-                                                    sizes="(max-width: 150px) 100vw, 150px" width="150"
-                                                    height="150"></span>
-                                    </a>
-                                    <a href="https://vm.beeteam368.net/playlist/marry-me-marry-you/"
-                                       class="beeteam368-suggestion-item beeteam368-suggestion-item-default flex-row-control flex-vertical-middle">
-                                        <span class="beeteam368-icon-item small-item"><i class="fas fa-quote-left"></i></span>
-                                        <span class="beeteam368-suggestion-item-content">
-<span class="beeteam368-suggestion-item-title h6 h-light">Marry Me, Marry You</span>
-<span class="beeteam368-suggestion-item-tax font-size-10">Playlist</span>
-</span>
-                                        <span class="beeteam368-suggestion-item-image"><img
-                                                    src="https://vm.beeteam368.net/wp-content/uploads/2021/12/thomas-le-bPD4U-mqC44-unsplash-150x150.jpg"
-                                                    class="blog-img" alt=""
-                                                    srcset="https://vm.beeteam368.net/wp-content/uploads/2021/12/thomas-le-bPD4U-mqC44-unsplash-150x150.jpg 150w, https://vm.beeteam368.net/wp-content/uploads/2021/12/thomas-le-bPD4U-mqC44-unsplash-300x300.jpg 300w, https://vm.beeteam368.net/wp-content/uploads/2021/12/thomas-le-bPD4U-mqC44-unsplash-420x420.jpg 420w, https://vm.beeteam368.net/wp-content/uploads/2021/12/thomas-le-bPD4U-mqC44-unsplash-800x800.jpg 800w"
-                                                    sizes="(max-width: 150px) 100vw, 150px" width="150"
-                                                    height="150"></span>
-                                    </a>
-                                    <a href="https://vm.beeteam368.net/video/emotional-and-beautiful-moments-in-football/"
-                                       class="beeteam368-suggestion-item beeteam368-suggestion-item-default flex-row-control flex-vertical-middle">
-                                        <span class="beeteam368-icon-item small-item"><i class="fas fa-quote-left"></i></span>
-                                        <span class="beeteam368-suggestion-item-content">
-<span class="beeteam368-suggestion-item-title h6 h-light">Emotional and Beautiful Moments in Football</span>
-<span class="beeteam368-suggestion-item-tax font-size-10">Video</span>
-</span>
-                                        <span class="beeteam368-suggestion-item-image"><img
-                                                    src="https://vm.beeteam368.net/wp-content/uploads/2021/12/emilio-garcia-AWdCgDDedH0-unsplash-150x150.jpg"
-                                                    class="blog-img" alt=""
-                                                    srcset="https://vm.beeteam368.net/wp-content/uploads/2021/12/emilio-garcia-AWdCgDDedH0-unsplash-150x150.jpg 150w, https://vm.beeteam368.net/wp-content/uploads/2021/12/emilio-garcia-AWdCgDDedH0-unsplash-300x300.jpg 300w, https://vm.beeteam368.net/wp-content/uploads/2021/12/emilio-garcia-AWdCgDDedH0-unsplash-420x420.jpg 420w, https://vm.beeteam368.net/wp-content/uploads/2021/12/emilio-garcia-AWdCgDDedH0-unsplash-800x800.jpg 800w"
-                                                    sizes="(max-width: 150px) 100vw, 150px" width="150"
-                                                    height="150"></span>
-                                    </a>
-                                    <a href="https://vm.beeteam368.net/audio/beija-flor/"
-                                       class="beeteam368-suggestion-item beeteam368-suggestion-item-default flex-row-control flex-vertical-middle">
-                                        <span class="beeteam368-icon-item small-item"><i class="fas fa-quote-left"></i></span>
-                                        <span class="beeteam368-suggestion-item-content">
-<span class="beeteam368-suggestion-item-title h6 h-light">Beija-flor</span>
-<span class="beeteam368-suggestion-item-tax font-size-10">Audio</span>
-</span>
-                                        <span class="beeteam368-suggestion-item-image"><img
-                                                    src="https://vm.beeteam368.net/wp-content/uploads/2021/12/musician-664432_1920-150x150.jpg"
-                                                    class="blog-img" alt=""
-                                                    srcset="https://vm.beeteam368.net/wp-content/uploads/2021/12/musician-664432_1920-150x150.jpg 150w, https://vm.beeteam368.net/wp-content/uploads/2021/12/musician-664432_1920-300x300.jpg 300w, https://vm.beeteam368.net/wp-content/uploads/2021/12/musician-664432_1920-420x420.jpg 420w, https://vm.beeteam368.net/wp-content/uploads/2021/12/musician-664432_1920-800x800.jpg 800w"
-                                                    sizes="(max-width: 150px) 100vw, 150px" width="150"
-                                                    height="150"></span>
-                                    </a>
-                                    <a href="https://vm.beeteam368.net/video/relaxation-nature-video/"
-                                       class="beeteam368-suggestion-item beeteam368-suggestion-item-default flex-row-control flex-vertical-middle">
-                                        <span class="beeteam368-icon-item small-item"><i class="fas fa-quote-left"></i></span>
-                                        <span class="beeteam368-suggestion-item-content">
-<span class="beeteam368-suggestion-item-title h6 h-light">Relaxation Nature Video</span>
-<span class="beeteam368-suggestion-item-tax font-size-10">Video</span>
-</span>
-                                        <span class="beeteam368-suggestion-item-image"><img
-                                                    src="https://vm.beeteam368.net/wp-content/uploads/2021/12/polynesia-3021072_1920-150x150.jpg"
-                                                    class="blog-img" alt=""
-                                                    srcset="https://vm.beeteam368.net/wp-content/uploads/2021/12/polynesia-3021072_1920-150x150.jpg 150w, https://vm.beeteam368.net/wp-content/uploads/2021/12/polynesia-3021072_1920-300x300.jpg 300w, https://vm.beeteam368.net/wp-content/uploads/2021/12/polynesia-3021072_1920-420x420.jpg 420w, https://vm.beeteam368.net/wp-content/uploads/2021/12/polynesia-3021072_1920-800x800.jpg 800w"
-                                                    sizes="(max-width: 150px) 100vw, 150px" width="150"
-                                                    height="150"></span>
-                                    </a>
-                                </div>
+<!--                                <div class="beeteam368-sg-new-posts beeteam368-live-search-control">-->
+<!--                                    <h5 class="beeteam368-sg-new-posts-heading sg-heading-default">Do Not Miss</h5>-->
+<!--                                    <h5 class="beeteam368-sg-new-posts-heading sg-heading-dynamic">Search-->
+<!--                                        Suggestions</h5>-->
+<!--                                    <a href="https://vm.beeteam368.net/audio/red-roses/"-->
+<!--                                       class="beeteam368-suggestion-item beeteam368-suggestion-item-default flex-row-control flex-vertical-middle">-->
+<!--                                        <span class="beeteam368-icon-item small-item"><i class="fas fa-quote-left"></i></span>-->
+<!--                                        <span class="beeteam368-suggestion-item-content">-->
+<!--<span class="beeteam368-suggestion-item-title h6 h-light">Red Roses</span>-->
+<!--<span class="beeteam368-suggestion-item-tax font-size-10">Audio</span>-->
+<!--</span>-->
+<!--                                        <span class="beeteam368-suggestion-item-image"><img-->
+<!--                                                    src="https://vm.beeteam368.net/wp-content/uploads/2021/12/elice-moore-E-AUpYXbjM-unsplash-150x150.jpg"-->
+<!--                                                    class="blog-img" alt=""-->
+<!--                                                    srcset="https://vm.beeteam368.net/wp-content/uploads/2021/12/elice-moore-E-AUpYXbjM-unsplash-150x150.jpg 150w, https://vm.beeteam368.net/wp-content/uploads/2021/12/elice-moore-E-AUpYXbjM-unsplash-300x300.jpg 300w, https://vm.beeteam368.net/wp-content/uploads/2021/12/elice-moore-E-AUpYXbjM-unsplash-420x420.jpg 420w, https://vm.beeteam368.net/wp-content/uploads/2021/12/elice-moore-E-AUpYXbjM-unsplash-800x800.jpg 800w"-->
+<!--                                                    sizes="(max-width: 150px) 100vw, 150px" width="150"-->
+<!--                                                    height="150"></span>-->
+<!--                                    </a>-->
+<!--                                    <a href="https://vm.beeteam368.net/playlist/marry-me-marry-you/"-->
+<!--                                       class="beeteam368-suggestion-item beeteam368-suggestion-item-default flex-row-control flex-vertical-middle">-->
+<!--                                        <span class="beeteam368-icon-item small-item"><i class="fas fa-quote-left"></i></span>-->
+<!--                                        <span class="beeteam368-suggestion-item-content">-->
+<!--<span class="beeteam368-suggestion-item-title h6 h-light">Marry Me, Marry You</span>-->
+<!--<span class="beeteam368-suggestion-item-tax font-size-10">Playlist</span>-->
+<!--</span>-->
+<!--                                        <span class="beeteam368-suggestion-item-image"><img-->
+<!--                                                    src="https://vm.beeteam368.net/wp-content/uploads/2021/12/thomas-le-bPD4U-mqC44-unsplash-150x150.jpg"-->
+<!--                                                    class="blog-img" alt=""-->
+<!--                                                    srcset="https://vm.beeteam368.net/wp-content/uploads/2021/12/thomas-le-bPD4U-mqC44-unsplash-150x150.jpg 150w, https://vm.beeteam368.net/wp-content/uploads/2021/12/thomas-le-bPD4U-mqC44-unsplash-300x300.jpg 300w, https://vm.beeteam368.net/wp-content/uploads/2021/12/thomas-le-bPD4U-mqC44-unsplash-420x420.jpg 420w, https://vm.beeteam368.net/wp-content/uploads/2021/12/thomas-le-bPD4U-mqC44-unsplash-800x800.jpg 800w"-->
+<!--                                                    sizes="(max-width: 150px) 100vw, 150px" width="150"-->
+<!--                                                    height="150"></span>-->
+<!--                                    </a>-->
+<!--                                    <a href="https://vm.beeteam368.net/video/emotional-and-beautiful-moments-in-football/"-->
+<!--                                       class="beeteam368-suggestion-item beeteam368-suggestion-item-default flex-row-control flex-vertical-middle">-->
+<!--                                        <span class="beeteam368-icon-item small-item"><i class="fas fa-quote-left"></i></span>-->
+<!--                                        <span class="beeteam368-suggestion-item-content">-->
+<!--<span class="beeteam368-suggestion-item-title h6 h-light">Emotional and Beautiful Moments in Football</span>-->
+<!--<span class="beeteam368-suggestion-item-tax font-size-10">Video</span>-->
+<!--</span>-->
+<!--                                        <span class="beeteam368-suggestion-item-image"><img-->
+<!--                                                    src="https://vm.beeteam368.net/wp-content/uploads/2021/12/emilio-garcia-AWdCgDDedH0-unsplash-150x150.jpg"-->
+<!--                                                    class="blog-img" alt=""-->
+<!--                                                    srcset="https://vm.beeteam368.net/wp-content/uploads/2021/12/emilio-garcia-AWdCgDDedH0-unsplash-150x150.jpg 150w, https://vm.beeteam368.net/wp-content/uploads/2021/12/emilio-garcia-AWdCgDDedH0-unsplash-300x300.jpg 300w, https://vm.beeteam368.net/wp-content/uploads/2021/12/emilio-garcia-AWdCgDDedH0-unsplash-420x420.jpg 420w, https://vm.beeteam368.net/wp-content/uploads/2021/12/emilio-garcia-AWdCgDDedH0-unsplash-800x800.jpg 800w"-->
+<!--                                                    sizes="(max-width: 150px) 100vw, 150px" width="150"-->
+<!--                                                    height="150"></span>-->
+<!--                                    </a>-->
+<!--                                    <a href="https://vm.beeteam368.net/audio/beija-flor/"-->
+<!--                                       class="beeteam368-suggestion-item beeteam368-suggestion-item-default flex-row-control flex-vertical-middle">-->
+<!--                                        <span class="beeteam368-icon-item small-item"><i class="fas fa-quote-left"></i></span>-->
+<!--                                        <span class="beeteam368-suggestion-item-content">-->
+<!--<span class="beeteam368-suggestion-item-title h6 h-light">Beija-flor</span>-->
+<!--<span class="beeteam368-suggestion-item-tax font-size-10">Audio</span>-->
+<!--</span>-->
+<!--                                        <span class="beeteam368-suggestion-item-image"><img-->
+<!--                                                    src="https://vm.beeteam368.net/wp-content/uploads/2021/12/musician-664432_1920-150x150.jpg"-->
+<!--                                                    class="blog-img" alt=""-->
+<!--                                                    srcset="https://vm.beeteam368.net/wp-content/uploads/2021/12/musician-664432_1920-150x150.jpg 150w, https://vm.beeteam368.net/wp-content/uploads/2021/12/musician-664432_1920-300x300.jpg 300w, https://vm.beeteam368.net/wp-content/uploads/2021/12/musician-664432_1920-420x420.jpg 420w, https://vm.beeteam368.net/wp-content/uploads/2021/12/musician-664432_1920-800x800.jpg 800w"-->
+<!--                                                    sizes="(max-width: 150px) 100vw, 150px" width="150"-->
+<!--                                                    height="150"></span>-->
+<!--                                    </a>-->
+<!--                                    <a href="https://vm.beeteam368.net/video/relaxation-nature-video/"-->
+<!--                                       class="beeteam368-suggestion-item beeteam368-suggestion-item-default flex-row-control flex-vertical-middle">-->
+<!--                                        <span class="beeteam368-icon-item small-item"><i class="fas fa-quote-left"></i></span>-->
+<!--                                        <span class="beeteam368-suggestion-item-content">-->
+<!--<span class="beeteam368-suggestion-item-title h6 h-light">Relaxation Nature Video</span>-->
+<!--<span class="beeteam368-suggestion-item-tax font-size-10">Video</span>-->
+<!--</span>-->
+<!--                                        <span class="beeteam368-suggestion-item-image"><img-->
+<!--                                                    src="https://vm.beeteam368.net/wp-content/uploads/2021/12/polynesia-3021072_1920-150x150.jpg"-->
+<!--                                                    class="blog-img" alt=""-->
+<!--                                                    srcset="https://vm.beeteam368.net/wp-content/uploads/2021/12/polynesia-3021072_1920-150x150.jpg 150w, https://vm.beeteam368.net/wp-content/uploads/2021/12/polynesia-3021072_1920-300x300.jpg 300w, https://vm.beeteam368.net/wp-content/uploads/2021/12/polynesia-3021072_1920-420x420.jpg 420w, https://vm.beeteam368.net/wp-content/uploads/2021/12/polynesia-3021072_1920-800x800.jpg 800w"-->
+<!--                                                    sizes="(max-width: 150px) 100vw, 150px" width="150"-->
+<!--                                                    height="150"></span>-->
+<!--                                    </a>-->
+<!--                                </div>-->
                             </div>
                         </form>
                     </div>
@@ -198,7 +198,7 @@
                 </div>
                 <div class="site__col auto-width beeteam368-logo-mobile">
                     <div class="beeteam368-logo-wrap elm-logo-mobile">
-                        <a href="https://vm.beeteam368.net/" title="VidMov Theme"
+                        <a href="index.php" title="VidMov Theme"
                            class="beeteam368-logo-link h1 mobile-logo-control">
                             <img alt="VidMov Theme"
                                  src="assets/images/mainLogo.png"
@@ -2439,13 +2439,19 @@
                                         </div>
                                     </div>
                                     <hr>
-                                    <a href="#"
+                                    <?php
+                                        if($_SESSION['has_channel'] != 0){
+                                    ?>
+                                    <a href="channel.php?id=<?php echo $_SESSION['has_channel']; ?>"
                                        class="flex-row-control flex-vertical-middle icon-drop-down-url">
 <span class="beeteam368-icon-item">
 <i class="fas fa-chalkboard-teacher"></i>
 </span>
                                         <span class="nav-font">Your Channel</span>
                                     </a>
+                                    <?php
+                                        }
+                                    ?>
                                     <a href="https://vm.beeteam368.net/buy/"
                                        class="purchases-menu flex-row-control flex-vertical-middle icon-drop-down-url">
 <span class="beeteam368-icon-item">
@@ -2482,12 +2488,12 @@
                                         <span class="nav-font">Your Dashboard</span>
                                     </a>
                                     <hr>
-                                    <a href="https://vm.beeteam368.net/main-logout/?random_query=1654690946"
+                                    <a href="logout.php"
                                        class="flex-row-control flex-vertical-middle icon-drop-down-url">
 <span class="beeteam368-icon-item">
 <i class="fas fa-sign-out-alt"></i>
 </span>
-                                        <span class="nav-font">Logout</span>
+                                        <span class="nav-font" id="logout-button">Logout</span>
                                     </a>
                                 </div>
                             </div>

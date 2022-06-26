@@ -32,7 +32,9 @@ $(function () {
         }
         $.post('ajax/login.php',
             {
-                username: username, password: password, captchaResponse: grecaptcha.getResponse()
+                username: username,
+                password: password,
+                captchaResponse: grecaptcha.getResponse()
             }, function (data) {
                 if (data.error !== "") {
                     $('#error').html('<b>' + data.error + '</b>');
