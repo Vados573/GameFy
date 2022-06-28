@@ -291,7 +291,7 @@ $(function () {
                     $('#streamKey').prop("disabled", true);
                     $('#streamName').val('');
                     $('#streamDesc').val('');
-                    $('#is_record').prop('checked',false);
+                    $('#is_record').prop('checked', false);
                     $('#streamGames').val('0');
                 }
             }, 'json');
@@ -314,18 +314,57 @@ $(function () {
         }, 'json');
     }
 
-    $('.tab-item').on('click', null, null, function (){
-        if ($(this).attr('title') === "Stream"){
+    $('.tab-item').on('click', null, null, function () {
+        if ($(this).attr('title') === "Stream") {
             $(".channel-content").hide();
             $(".is-tab-content-stream").show();
         }
-        if ($(this).attr('title') === "Videos"){
+        if ($(this).attr('title') === "Videos") {
             $(".channel-content").hide();
             $(".is-tab-content-videos").show();
         }
         $(".active-item").removeClass("active-item");
         $(this).addClass("active-item");
     });
+
+    $('.chat-input').on('keyup', null, null, function (e) {
+        if (e.key === "Enter") {
+            let text_content = $('.chat-input').val();
+            $.post('ajax/chat.php', {textContent: text_content, idStream: getUrlParameter('id')}, function (data) {
+                if (data.error === "") {
+                    $('.chat-input').val('');
+                    //<editor-fold desc="Append Chat">
+                    $('.comment-list').append("<li class=\"comment byuser comment-author-rodav375 even thread-even depth-1\">\n" +
+                        "                                                                <article id=\"div-comment-142\" class=\"comment-body\">\n" +
+                        "                                                                    <footer class=\"comment-meta\">\n" +
+                        "                                                                        <div class=\"comment-author vcard\">\n" +
+                        "                                                                            <img alt=\"\" src=\"" + data.path + "\" srcset=\"" + data.path + "\" class=\"avatar avatar arm_grid_avatar arm-avatar avatar-61 photo\" width=\"61\" height=\"61\"> <b class=\"fn\">" + data.username + "</b>\n" +
+                        "                                                                            <span class=\"says\">says:</span></div>\n" +
+                        "                                                                        <div class=\"comment-metadata\">\n" +
+                        "                                                                            <a href=\"user.php?id=" + data.id +"\">\n" +
+                        "                                                                                <time datetime=\"2022-06-26T12:47:47+00:00\">\n" +
+                        "                                                                                    " + data.date +" at " + data.time + "\n" +
+                        "                                                                                </time>\n" +
+                        "                                                                            </a></div>\n" +
+                        "                                                                    </footer>\n" +
+                        "                                                                    <div class=\"comment-content\">\n" +
+                        "                                                                        " + data.content + "\n" +
+                        "                                                                    </div>\n" +
+                        "                                                                </article>\n" +
+                        "                                                            </li>");
+                    //</editor-fold>
+                    $(".comment-list").animate({ scrollTop: $('.comment-list').prop("scrollHeight")}, 1000);
+                }
+            }, 'json')
+        }
+    });
+
+    $(".comment-list").animate({ scrollTop: $('.comment-list').prop("scrollHeight")}, 1000);
+
+    function reload_chat(){
+
+    }
+
 });
 
 let getUrlParameter = function getUrlParameter(sParam) {

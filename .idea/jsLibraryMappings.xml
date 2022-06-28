@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="JavaScriptLibraryMappings">
-    <file url="PROJECT" libraries="{@fortawesome/fontawesome-free, @types/jquery, font-awesome, swiper, swiper-bundle}" />
+    <file url="PROJECT" libraries="{@fortawesome/fontawesome-free, @types/jquery, Chart.js, bootstrap, font-awesome, swiper, swiper-bundle}" />
   </component>
 </project>

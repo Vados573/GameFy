@@ -207,20 +207,6 @@ if (!isset($_GET['id'])) {
                                     <span class="tab-text h5">Blogs</span>
                                     <span class="tab-privacy font-meta font-meta-size-10 is-public">Public</span> </a>
                                 <a href="#"
-                                   class="swiper-slide tab-item" title="Subscriptions" role="group" aria-label="5 / 7">
-<span class="beeteam368-icon-item tab-icon">
-<i class="fas fa-star"></i>
-</span>
-                                    <span class="tab-text h5">Subscriptions</span>
-                                    <span class="tab-privacy font-meta font-meta-size-10 is-public">Private</span> </a>
-                                <a href="#"
-                                   class="swiper-slide tab-item" title="Watch Later" role="group" aria-label="6 / 7">
-<span class="beeteam368-icon-item tab-icon">
-<i class="fas fa-clock"></i>
-</span>
-                                    <span class="tab-text h5">Watch Later</span>
-                                    <span class="tab-privacy font-meta font-meta-size-10 is-public">Private</span> </a>
-                                <a href="#"
                                    class="swiper-slide tab-item" title="About" role="group" aria-label="7 / 7">
 <span class="beeteam368-icon-item tab-icon">
 <i class="fas fa-scroll"></i>
@@ -280,59 +266,73 @@ if (!isset($_GET['id'])) {
                                         allowfullscreen="true" style="min-height: 500px"></iframe>
                             </div>
                         </div>
-                        <aside id="main-sidebar" style="margin-bottom: 10px" class="site__col main-sidebar">
-                            <div class="sidebar-content">
-                                <div id="beeteam368_channel_extensions-2"
-                                     class="widget r-widget-control vidmov-channel-extensions">
-                                    <h2 class="h3 widget-title flex-row-control flex-vertical-middle"><span
-                                                class="beeteam368-icon-item"><i class="fas fa-comment"></i></span>
-                                        <span class="widget-title-wrap max-1line">Chat:
+                        <?php
+                        if (intval($user->is_live) == 1 or 1 == 1) {
+                            ?>
+                            <aside id="main-sidebar" style="margin-bottom: 10px" class="site__col main-sidebar">
+                                <div class="sidebar-content">
+                                    <div id="beeteam368_channel_extensions-2"
+                                         class="widget r-widget-control vidmov-channel-extensions">
+                                        <h2 class="h3 widget-title flex-row-control flex-vertical-middle"><span
+                                                    class="beeteam368-icon-item"><i class="fas fa-comment"></i></span>
+                                            <span class="widget-title-wrap max-1line">Chat:
                                         <span class="wg-line">
 
                                         </span>
                                     </span>
-                                    </h2>
-                                    <div id="blog_wrapper_524805101655217589"
-                                         class="blog-wrapper global-blog-wrapper blog-wrapper-control flex-row-control site__row">
-                                        <article class="post-item site__col flex-row-control">
-                                            <div class="post-item-wrap">
-                                                <div class="author-wrapper flex-row-control flex-vertical-middle">
-                                                    <div class="comments-area">
-                                                        <ol class="comment-list">
-                                                            <li id="comment-142"
-                                                                class="comment byuser comment-author-rodav375 even thread-even depth-1">
-                                                                <article id="div-comment-142" class="comment-body">
-                                                                    <footer class="comment-meta">
-                                                                        <div class="comment-author vcard">
-                                                                            <img alt=""
-                                                                                 src="https://secure.gravatar.com/avatar/83232f25bace98c04afdba2ef9eedd8d?s=61&amp;d=mm&amp;r=g"
-                                                                                 srcset="https://secure.gravatar.com/avatar/83232f25bace98c04afdba2ef9eedd8d?s=122&amp;d=mm&amp;r=g 2x"
-                                                                                 class="avatar avatar arm_grid_avatar arm-avatar avatar-61 photo"
-                                                                                 width="61" height="61"> <b class="fn">rodav573</b>
-                                                                            <span class="says">says:</span></div>
-                                                                        <div class="comment-metadata">
-                                                                            <a href="https://vm.beeteam368.net/video/call-of-duty-vanguard/#comment-142">
-                                                                                <time datetime="2022-06-26T12:47:47+00:00">
-                                                                                    June 26, 2022 at 12:47 pm
-                                                                                </time>
-                                                                            </a></div>
-                                                                    </footer>
-                                                                    <div class="comment-content">
-                                                                        KEKW
-                                                                    </div>
-                                                                </article>
-                                                            </li>
-                                                        </ol>
+                                        </h2>
+                                        <div id="blog_wrapper_524805101655217589"
+                                             class="blog-wrapper global-blog-wrapper blog-wrapper-control flex-row-control site__row">
+                                            <article class="post-item site__col flex-row-control">
+                                                <div class="post-item-wrap">
+                                                    <div class="author-wrapper flex-row-control flex-vertical-middle">
+                                                        <div class="comments-area" style="width: 100%;">
+                                                            <ol class="comment-list"
+                                                                style="height: 300px; overflow-y: scroll">
+                                                                <?php
+
+                                                                ?>
+                                                                <li
+                                                                        class="comment byuser comment-author-rodav375 even thread-even depth-1">
+                                                                    <article id="div-comment-142" class="comment-body"
+                                                                             style="margin-top: 10px;">
+                                                                        <footer class="comment-meta">
+                                                                            <div class="comment-author vcard">
+                                                                                <img alt=""
+                                                                                     src="https://secure.gravatar.com/avatar/83232f25bace98c04afdba2ef9eedd8d?s=61&amp;d=mm&amp;r=g"
+                                                                                     srcset="https://secure.gravatar.com/avatar/83232f25bace98c04afdba2ef9eedd8d?s=122&amp;d=mm&amp;r=g 2x"
+                                                                                     class="avatar avatar arm_grid_avatar arm-avatar avatar-61 photo"
+                                                                                     width="61" height="61"> <b
+                                                                                        class="fn">rodav573</b>
+                                                                                <span class="says">says:</span></div>
+                                                                            <div class="comment-metadata">
+                                                                                <a href="https://vm.beeteam368.net/video/call-of-duty-vanguard/#comment-142">
+                                                                                    <time datetime="2022-06-26T12:47:47+00:00">
+                                                                                        June 26, 2022 at 12:47 pm
+                                                                                    </time>
+                                                                                </a></div>
+                                                                        </footer>
+                                                                        <div class="comment-content">
+                                                                            KEKW
+                                                                        </div>
+                                                                    </article>
+                                                                </li>
+                                                            </ol>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </article>
+                                            </article>
+                                        </div>
+                                    </div>
+                                    <div class="tml-field-wrap">
+                                        <input type="text" class="tml-field chat-input" placeholder="Chat now!"
+                                               style="width: 100%;">
                                     </div>
                                 </div>
-                                <div class="tml-field-wrap">
-                                    <input type="text" class="tml-field" placeholder="Chat now!" style="width: 90%;">
-                                </div>
-                        </aside>
+                            </aside>
+                            <?php
+                        }
+                        ?>
                     </div>
                     <?php
                     if (isset($_SESSION['id'])) {
@@ -590,7 +590,7 @@ if (!isset($_GET['id'])) {
                                     <div class="post-item-wrap">
                                         <div class="post-featured-image preview-mode-control" data-id="550">
                                             <a data-post-id="550" data-post-type="vidmov_video"
-                                               href="<?php ?>"
+                                               href="video.php?id=<?php echo $table->id_stream ?>"
                                                title="<?php echo $table->name_stream ?>"
                                                class="blog-img-link blog-img-link-control">
                                                 <img src="https://cdn.api.video/vod/<?php echo $table->path_video_stream ?>/thumbnail.jpg"
@@ -616,7 +616,7 @@ if (!isset($_GET['id'])) {
                                             <div class="beeteam368-bt-ft-img first-show flex-row-control flex-vertical-middle">
                                                 <h3 class="entry-title post-title max-2lines h4 h5-mobile">
                                                     <a class="post-listing-title"
-                                                       href="https://vm.beeteam368.net/video/call-of-duty-vanguard/"
+                                                       href="video.php?id=<?php echo $table->id_stream ?>"
                                                        title="<?php echo $table->name_stream ?>"><?php echo $table->name_stream ?></a>
                                                 </h3>
                                             </div>

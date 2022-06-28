@@ -66,6 +66,10 @@ try {
             $result = odbc_exec($con, $sql);
             throw new Exception("Error something went wrong");
         }
+        $file_content = "";
+        $fp = fopen($_SERVER['DOCUMENT_ROOT'] . "/GameFy/chat/stream_" . $stream->stream_id . ".txt","w");
+        fwrite($fp, $file_content);
+        fclose($fp);
         $json['error'] = "";
     }
     elseif (isset($stop)){
@@ -97,7 +101,7 @@ try {
                 throw new Exception("Something wrong happened");
             }
             if ($number_rows == 0){
-                $sql = "UPDATE stream SET path_video_stream = '$videoId' AND date_stream = '" . date("Y-m-d H:i:s") . "' WHERE is_live_stream = 1 AND id_channel = $idChannel";
+                $sql = "UPDATE stream SET path_video_stream = '$videoId', date_stream = '" . date("Y-m-d H:i:s") . "' WHERE is_live_stream = 1 AND id_channel = $idChannel";
                 $sql = odbc_exec($con, $sql);
             }
             $sql = "UPDATE stream SET is_live_stream = 0 WHERE is_live_stream = 1 AND id_channel = $idChannel";

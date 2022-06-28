@@ -32,7 +32,7 @@ $number_of_rows = odbc_num_rows($r);
 <?php require('includes/sidebar.php'); ?>
 <div id="beeteam368-site-wrap-parent" class="beeteam368-site-wrap-parent beeteam368-site-wrap-parent-control">
     <?php require('includes/header.php'); ?>
-    <div id="beeteam368-primary-cw" class="beeteam368-primary-cw" style="background-color:var(--color__body-background);">
+    <div id="beeteam368-primary-cw" class="beeteam368-primary-cw" style="background-color:var(--color__body-background); padding-bottom: 60px;">
         <div class="site__container main__container-control">
             <div id="sidebar-direction" class="site__row flex-row-control sidebar-direction">
                 <main id="main-content" class="site__col main-content">

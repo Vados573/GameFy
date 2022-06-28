@@ -664,7 +664,7 @@ template {
 
 .beeteam368-primary-cw {
     padding-top: 40px;
-    padding-bottom: 60px
+    /*! padding-bottom: 60px; */
 }
 
 @media (min-width: 1200px) {

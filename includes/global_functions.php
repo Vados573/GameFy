@@ -273,6 +273,7 @@ function updateLive($idLive, $name = null, $record = null){
     else{
         $data["record"] = false;
     }
+    $data["record"] = boolval($data["record"]);
     $postData = json_encode($data);
     curl_setopt_array($curl, array(
         CURLOPT_URL => "https://ws.api.video/live-streams/" . $idLive,
@@ -302,33 +303,22 @@ function updateLive($idLive, $name = null, $record = null){
  * @param $sortOrder string Order by asc or desc
  * @return bool|string Response on success or False on fail
  */
-function getVideos($idStream = null, $sortBy = null, $sortOrder = "asc"){
+function getVideos($idStream, $sortBy,  $sortOrder = "desc"){
     if ($_SESSION['authTime'] <= strtotime("-1 hour")){
         print_r($_SESSION['authTime'] . " ");
         print_r(strtotime("-1 hour"));
-        die("test");
         refreshApi();
     }
     $authToken = $_SESSION['authToken'];
     $authorization = "Authorization: Bearer $authToken";
     $curl = curl_init();
-    $data = array();
-    if ($idStream != null){
-        $data["liveStreamId"] = $idStream;
-    }
-    if($sortBy != null){
-        $data["sortBy"] = $sortBy;
-        $data["sortOrder"] = $sortOrder;
-    }
-    $postData = json_encode($data);
     curl_setopt_array($curl, array(
-        CURLOPT_URL => "https://ws.api.video/videos",
+        CURLOPT_URL => "https://ws.api.video/videos?liveStreamId=" . $idStream ."&sortBy=" . $sortBy . "&sortOrder=" . $sortOrder ,
         CURLOPT_HTTPHEADER => array(
             "Content-Type: text/plain",
             $authorization
         ),
         CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_POSTFIELDS => $postData,
         CURLOPT_ENCODING => "",
         CURLOPT_MAXREDIRS => 10,
         CURLOPT_TIMEOUT => 0,
